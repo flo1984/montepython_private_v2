@@ -4,11 +4,9 @@
 
 # Files created by mac
 *.DS_Store
-
+XC
 # Files created by runs
 chains/*
-output/*
-
 output/*
 
 # Compiled python files
