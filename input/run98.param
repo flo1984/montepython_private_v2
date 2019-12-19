@@ -42,7 +42,7 @@ data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['frac_EDE']     = [0.065,   0.0000001, 0.2,  0.002,    1, 'cosmo']
 data.parameters['log10mass']    = [2.7,   .7, 4.5,  0.01,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.0925,   0.04, None,  0.013,    1, 'cosmo']
-data.parameters['log10R_phi']     = [4,   2, 10,  0.01,    1, 'cosmo']
+data.parameters['log10R_phi']     = [4,   2, 10,  0.1,    1, 'cosmo']
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
 data.parameters['A_cib_217']         = [    47.2,     0,   200,     6.2593,     1, 'nuisance']
