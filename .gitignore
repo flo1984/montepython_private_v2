@@ -8,6 +8,8 @@
 # Files created by runs
 chains/*
 
+output/*
+
 # Compiled python files
 *.pyc
 
