@@ -54,7 +54,7 @@ data.parameters['M']          = [-19.1,   None, None,  0.004,  1,'nuisance']
 #data.parameters['YHe']             = [1, None, None, 0,     1,   'derived']
 #data.parameters['H0']              = [0, None, None, 0,     1,   'derived']
 #data.parameters['A_s']             = [0, None, None, 0,  1e-9,   'derived']
-data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
+#data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
 data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
 data.parameters['z_decay']          = [0, None, None, 0,     1,   'derived']
 
@@ -78,8 +78,8 @@ data.cosmo_arguments['T_ncdm'] = 0.71611
 
 # These two are required to get sigma8 as a derived parameter
 # (class must compute the P(k) until sufficient k)
-data.cosmo_arguments['output'] = 'mPk'
-data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
+#data.cosmo_arguments['output'] = 'mPk'
+#data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 data.cosmo_arguments['WKB_trigger_H_over_m']=0.01
 data.cosmo_arguments['Bubble_trigger_H_over_m']=0.2
