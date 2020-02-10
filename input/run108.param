@@ -36,12 +36,12 @@ data.over_sampling=[1,2]
 
 data.parameters['omega_b']      = [ 2.265,   None, None,  0.028, 0.01, 'cosmo']
 data.parameters['omega_cdm']    = [0.1266,   None, None, 0.0027,    1, 'cosmo']
-data.parameters['h']            = [.715,   None, None,   .002,    1, 'cosmo']
-data.parameters['ln10^{10}A_s'] = [ 3.144,   None, None, 0.0029,    1, 'cosmo']
-data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
+data.parameters['h']            = [.715,   0.5, 0.8,   .01,    1, 'cosmo']
+#data.parameters['ln10^{10}A_s'] = [ 3.144,   None, None, 0.0029,    1, 'cosmo']
+#data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['frac_EDE']     = [0.065,   0.0000001, 0.2,  0.002,    1, 'cosmo']
 data.parameters['log10mass']    = [2.7,   .7, 4.5,  0.01,    1, 'cosmo']
-data.parameters['tau_reio']     = [0.0925,   0.04, None,  0.013,    1, 'cosmo']
+#data.parameters['tau_reio']     = [0.0925,   0.04, None,  0.013,    1, 'cosmo']
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
 
@@ -60,8 +60,8 @@ data.parameters['z_decay']          = [0, None, None, 0,     1,   'derived']
 
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
 
-data.cosmo_arguments['sBBN file'] = data.path['cosmo']+'/bbn/sBBN.dat'
-data.cosmo_arguments['k_pivot'] = 0.05
+#data.cosmo_arguments['sBBN file'] = data.path['cosmo']+'/bbn/sBBN.dat'
+#data.cosmo_arguments['k_pivot'] = 0.05
 
 
 # The base model features two massless
