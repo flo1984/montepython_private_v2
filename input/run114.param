@@ -1,6 +1,6 @@
 #------Experiments to test (separated with commas)-----
 
-data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planck_lensing','bao_fs_boss_dr12','bao_smallz_2014','H0_local','Pantheon']
+data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planck_lensing']
 
 
 #------ Settings for the over-sampling.
@@ -19,7 +19,7 @@ data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planc
 # the three Planck likelihoods used, only Planck_highl requires nuisance
 # parameters, therefore over_sampling has a length of two (cosmology, plus one
 # set of nuisance).
-data.over_sampling=[1, 5,2]
+data.over_sampling=[1,5]
 
 #------ Parameter list -------
 
@@ -40,10 +40,11 @@ data.parameters['h']            = [.715,   None, None,   .002,    1, 'cosmo']
 data.parameters['ln10^{10}A_s'] = [ 3.144,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['frac_EDE']     = [0.065,   0.0000001, 0.2,  0.002,    1, 'cosmo']
-data.parameters['log10mass']    = [2.7,   .7, 4.5,  0.01,    1, 'cosmo']
+#data.parameters['log10mass']    = [2.7,   .7, 4.5,  0.01,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.0925,   0.04, None,  0.013,    1, 'cosmo']
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
+
 data.parameters['A_cib_217']         = [    47.2,     0,   200,     6.2593,     1, 'nuisance']
 data.parameters['cib_index']         = [    -1.3,  -1.3,  -1.3,          0,     1, 'nuisance']
 data.parameters['xi_sz_cib']         = [    0.42,     0,     1,       0.33,     1, 'nuisance']
@@ -93,7 +94,7 @@ data.parameters['A_planck']          = [ 1.00061,   0.9,   1.1,     0.0025,     
 data.parameters['A_pol']             = [       1,     1,     1,          0,     1, 'nuisance']
 
 
-data.parameters['M']          = [-19.1,   None, None,  0.004,  1,'nuisance']
+
 
 # Derived parameters
 
@@ -119,7 +120,7 @@ data.cosmo_arguments['N_ur'] = 2.0328
 data.cosmo_arguments['N_ncdm'] = 1
 data.cosmo_arguments['m_ncdm'] = 0.06
 data.cosmo_arguments['T_ncdm'] = 0.71611
-#data.cosmo_arguments['log10mass'] = 3.1
+data.cosmo_arguments['EDE2_clock_mass'] = 5000
 
 
 # These two are required to get sigma8 as a derived parameter

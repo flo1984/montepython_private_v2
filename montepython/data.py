@@ -812,7 +812,10 @@ class Data(object):
                 
                 frac_EDE = self.cosmo_arguments[elem]
                 h = self.cosmo_arguments['h']
-                mphi = 10**self.cosmo_arguments['log10mass']
+                try: 
+                    mphi = 10**self.cosmo_arguments['log10mass']
+                except:
+                    mphi = self.cosmo_arguments['EDE2_clock_mass']
                 try:
                     trigger = self.cosmo_arguments['trigger']           
                 except:
