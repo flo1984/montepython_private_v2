@@ -1,0 +1,4 @@
+#bbn constraint, see for example arXiv: 2001.04035v1
+
+bbn.omega_b      = 0.02268
+bbn.sigma  = 0.00036
