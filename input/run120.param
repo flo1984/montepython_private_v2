@@ -37,11 +37,11 @@ data.over_sampling=[1,2]
 data.parameters['omega_b']      = [ 2.265,   None, None,  0.028, 0.01, 'cosmo']
 data.parameters['omega_cdm']    = [0.1266,   None, None, 0.0027,    1, 'cosmo']
 data.parameters['h']            = [.715,   None,None,   .01,    1, 'cosmo']
-data.parameters['ln10^{10}A_s'] = [ 3.144,   None, None, 0.0029,    1, 'cosmo']
-data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
+#data.parameters['ln10^{10}A_s'] = [ 3.144,   None, None, 0.0029,    1, 'cosmo']
+#data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['frac_EDE']     = [0.065,   0.0000001, 0.2,  0.002,    1, 'cosmo']
 data.parameters['log10mass']    = [2.7,   .7, 4.5,  0.01,    1, 'cosmo']
-data.parameters['tau_reio']     = [0.0925,   0.04, None,  0.013,    1, 'cosmo']
+#data.parameters['tau_reio']     = [0.0925,   0.04, None,  0.013,    1, 'cosmo']
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
 
@@ -73,6 +73,9 @@ data.cosmo_arguments['N_ur'] = 2.0328
 data.cosmo_arguments['N_ncdm'] = 1
 data.cosmo_arguments['m_ncdm'] = 0.06
 data.cosmo_arguments['T_ncdm'] = 0.71611
+data.cosmo_arguments['n_s']    = 0.9649
+data.cosmo_arguments['tau_reio'] = 0.0544
+data.cosmo_arguments['ln10^{10}A_s'] = 3.044
 
 
 
