@@ -40,7 +40,7 @@ data.parameters['h']            = [.715,   None,None,   .01,    1, 'cosmo']
 #data.parameters['ln10^{10}A_s'] = [ 3.144,   None, None, 0.0029,    1, 'cosmo']
 #data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['frac_EDE']     = [0.065,   0.0000001, 0.2,  0.002,    1, 'cosmo']
-data.parameters['log10mass']    = [2.7,   .7, 4.5,  0.01,    1, 'cosmo']
+data.parameters['log10mass']    = [3.7,   3.5, 3.9,  0.01,    1, 'cosmo']
 #data.parameters['tau_reio']     = [0.0925,   0.04, None,  0.013,    1, 'cosmo']
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
