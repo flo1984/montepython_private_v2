@@ -133,7 +133,7 @@ data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 
 #data.cosmo_arguments['Bubble_trigger_H_over_m']=0.2
-data.cosmo_arguments['EDE2_clock_ini'] = 0.00001
+data.cosmo_arguments['EDE2_clock_ini'] = 0.0001
 data.cosmo_arguments['background_verbose'] = 4
 data.cosmo_arguments['perturbations_verbose'] = 2
 data.cosmo_arguments['Junction_tag'] = 1
