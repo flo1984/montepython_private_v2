@@ -18,6 +18,7 @@ import io_mp  # Needs to talk to io_mp.py file for the logging
 from io_mp import dictitems,dictvalues,dictkeys
 import prior
 from scipy.optimize import fsolve
+from numpy import log10
 
 # A modified version of Python dictionary in order to keep track of the order
 # in it (much the same as in an array). In case an older version of Python is
@@ -835,7 +836,7 @@ class Data(object):
             elif elem == 'frac_OEDE':
 
                 frac_OEDE = self.cosmo_arguments[elem]
-                self.cosmo_arguments['log10_fraction_axion_ac'] = np.log10(frac_OEDE)
+                self.cosmo_arguments['log10_fraction_axion_ac'] = log10(frac_OEDE)
                 del self.cosmo_arguments[elem]
 
             elif elem == 'phi_ini':
