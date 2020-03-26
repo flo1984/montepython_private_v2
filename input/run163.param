@@ -106,7 +106,7 @@ data.parameters['M']          = [-19.1,   None, None,  0.004,  1,'nuisance']
 #data.parameters['A_s']             = [0, None, None, 0,  1e-9,   'derived']
 data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
 data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
-data.parameters['z_decay']          = [0, None, None, 0,     1,   'derived']
+#data.parameters['z_decay']          = [0, None, None, 0,     1,   'derived']
 
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
 
@@ -146,7 +146,7 @@ data.cosmo_arguments['attractor_ic_scf'] = 'no'
 
 
 data.cosmo_arguments['background_verbose'] = 4
-data.cosmo_arguments['perturbations_verbose'] = 2
+data.cosmo_arguments['perturbations_verbose'] = 0
 #data.cosmo_arguments['back_integration_stepsize'] = 5.e-3
 
 
