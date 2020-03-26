@@ -831,6 +831,18 @@ class Data(object):
                 self.cosmo_arguments['Omega_EDE2'] = frac_EDE * mphi**2 / (h * 10**5 / (2.99792458*10**8) )**2 * trigger**2
 
                 del self.cosmo_arguments[elem]
+
+            elif elem == 'frac_OEDE':
+
+                frac_OEDE = self.cosmo_arguments[elem]
+                self.cosmo_arguments['log10_fraction_axion_ac'] = np.log10(frac_OEDE)
+                del self.cosmo_arguments[elem]
+
+            elif elem == 'phi_ini':
+
+                phi_ini = self.cosmo_arguments[elem]
+                self.cosmo_arguments['scf_parameters'] = str(phi_ini) + ", "+str(0.0)
+                del self.cosmo_arguments[elem]
                 
             elif elem == 'log10R_phi':
                 self.cosmo_arguments['EDE2_clock_pert_ini'] = 10**(-self.cosmo_arguments[elem])*self.cosmo_arguments['EDE2_clock_ini']
