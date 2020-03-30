@@ -39,7 +39,7 @@ data.parameters['omega_cdm']    = [0.11919,   None, None, 0.0027,    1, 'cosmo']
 data.parameters['h']            = [.7,   None, None,   .002,    1, 'cosmo']
 data.parameters['ln10^{10}A_s'] = [ 3.0753,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.96229,   None, None, 0.0074,    1, 'cosmo']
-data.parameters['N_ur']	        =[3.046,-2.5,4.5,0.01,1,'cosmo']
+data.parameters['N_ur']	        =[2.0328,      None,None,0.01,1,'cosmo']
 data.parameters['tau_reio']     = [0.0925,   0.04, None,  0.013,    1, 'cosmo']
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
@@ -116,9 +116,9 @@ data.cosmo_arguments['k_pivot'] = 0.05
 # and m/omega = 93.14 eV
 
 #data.cosmo_arguments['N_ur'] = 2.0328
-#data.cosmo_arguments['N_ncdm'] = 1
-#data.cosmo_arguments['m_ncdm'] = 0.06
-#data.cosmo_arguments['T_ncdm'] = 0.71611
+data.cosmo_arguments['N_ncdm'] = 1
+data.cosmo_arguments['m_ncdm'] = 0.06
+data.cosmo_arguments['T_ncdm'] = 0.71611
 
 
 
@@ -129,7 +129,7 @@ data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 #data.cosmo_arguments['WKB_trigger_H_over_m']=0.01
 #data.cosmo_arguments['EDE2_clock_ini'] = 0.00001
-#data.cosmo_arguments['background_verbose'] = 4
+data.cosmo_arguments['background_verbose'] = 4
 #data.cosmo_arguments['perturbations_verbose'] = 1
 #data.cosmo_arguments['Junction_tag'] = 1
 #data.cosmo_arguments['DMa_tag'] = 0
