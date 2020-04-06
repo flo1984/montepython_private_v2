@@ -35,7 +35,7 @@ data.over_sampling=[1,5,5,5,5,5]
 
 # Cosmological parameters list
 
-data.parameters['omega_b']      = [ 2.29,   2., 3,  0.028, 0.015, 'cosmo']
+data.parameters['omega_b']      = [ 2.29,   2., 3,  0.015, 0.01, 'cosmo']
 data.parameters['omega_cdm']    = [0.13,   0.1, 0.2, 0.002,    1, 'cosmo']
 data.parameters['h']            = [.71,   0.6, 0.8,   .002,    1, 'cosmo']
 data.parameters['ln10^{10}A_s'] = [ 3.077,   3, 3.2, 0.01,    1, 'cosmo']
