@@ -23,9 +23,10 @@ from itertools import count
 # The root plotting module, to change options like font sizes, etc...
 import matplotlib
 # The following line suppresses the need for an X server
-matplotlib.use("Agg")
+# matplotlib.use("Agg")
 # Module for handling display
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 # Module to handle warnings from matplotlib
 import warnings
 import importlib
