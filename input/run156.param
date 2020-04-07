@@ -34,16 +34,16 @@ data.over_sampling=[1, 5,2]
 
 # Cosmological parameters list
 
-data.parameters['omega_b']      = [ 2.265,   None, None,  0.028, 0.01, 'cosmo']
-data.parameters['omega_cdm']    = [0.1266,   None, None, 0.0027,    1, 'cosmo']
-data.parameters['h']            = [.715,   None, None,   .002,    1, 'cosmo']
-data.parameters['ln10^{10}A_s'] = [ 3.144,   None, None, 0.0029,    1, 'cosmo']
-data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
-data.parameters['tau_reio']     = [0.0925,   0.04, None,  0.013,    1, 'cosmo']
-data.parameters['frac_EDE']     = [0.065,   0.0000001, 0.3,  0.008,    1, 'cosmo']
-data.parameters['log10mass']    = [2.7,   1.3, 3.3,  0.08,    1, 'cosmo']
-#data.parameters['three_eos_EDE']    = [2.5,   1, 4,  0.05,    1, 'cosmo']
-#data.parameters['three_ceff2_EDE']  = [2.5,   1, 4,  0.05,    1, 'cosmo']
+data.parameters['omega_b']      = [ 2.29,   None, None,  0.028, 0.01, 'cosmo']
+data.parameters['omega_cdm']    = [0.136,   None, None, 0.0027,    1, 'cosmo']
+data.parameters['h']            = [.7,   None, None,   .002,    1, 'cosmo']
+data.parameters['ln10^{10}A_s'] = [ 3.07,   None, None, 0.0029,    1, 'cosmo']
+data.parameters['n_s']          = [0.98,   None, None, 0.0074,    1, 'cosmo']
+data.parameters['tau_reio']     = [0.058,   0.04, None,  0.013,    1, 'cosmo']
+data.parameters['frac_EDE']     = [0.11,   0.0000001, 0.3,  0.008,    1, 'cosmo']
+data.parameters['log10mass']    = [2.5,   2.1, 2.9,  0.08,    1, 'cosmo']
+#data.parameters['three_eos_EDE']    = [2.5,   1, 3,  0.05,    1, 'cosmo']
+#data.parameters['three_ceff2_EDE']  = [2.5,   1.5, 2.5,  0.05,    1, 'cosmo']
 
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
@@ -131,7 +131,7 @@ data.cosmo_arguments['output'] = 'mPk'
 data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 
-data.cosmo_arguments['Bubble_trigger_H_over_m']=0.18
+data.cosmo_arguments['Bubble_trigger_H_over_m']=0.2
 data.cosmo_arguments['EDE2_clock_ini'] = 0.0001
 data.cosmo_arguments['background_verbose'] = 4
 data.cosmo_arguments['perturbations_verbose'] = 2
