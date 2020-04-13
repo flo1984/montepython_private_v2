@@ -844,6 +844,13 @@ class Data(object):
                 phi_ini = self.cosmo_arguments[elem]
                 self.cosmo_arguments['scf_parameters'] = str(phi_ini) + ", "+str(0.0)
                 del self.cosmo_arguments[elem]
+
+            elif elem == 'log10_a_ADE':
+                a_ADE = 10**self.cosmo_arguments[elem]
+                self.cosmo_arguments['a_ADE'] = a_ADE
+                del self.cosmo_arguments[elem]
+                
+
                 
             elif elem == 'log10R_phi':
                 self.cosmo_arguments['EDE2_clock_pert_ini'] = 10**(-self.cosmo_arguments[elem])*self.cosmo_arguments['EDE2_clock_ini']
