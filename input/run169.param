@@ -143,7 +143,7 @@ data.cosmo_arguments['decay_res_enhancement'] = 100
 data.cosmo_arguments['three_cvis2_EDE'] = 0
 data.cosmo_arguments['three_ceff2_EDE'] = 2.0
 data.cosmo_arguments['three_eos_EDE'] = 2.0
-data.cosmo_arguments['log10mass'] = 2.6
+data.cosmo_arguments['EDE2_clock_mass'] = 398.107
 
 
 #makes sure that all modes start before the transition of EDE, i.e. before z=30k.
