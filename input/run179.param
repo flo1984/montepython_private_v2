@@ -101,7 +101,7 @@ data.parameters['M']          = [-19.1,   None, None,  0.004,  1,'nuisance']
 
 # Derived parameters
 
-#data.parameters['YHe']             = [1, None, None, 0,     1,   'derived']
+data.parameters['YHe']             = [1, None, None, 0,     1,   'derived']
 #data.parameters['H0']              = [0, None, None, 0,     1,   'derived']
 #data.parameters['A_s']             = [0, None, None, 0,  1e-9,   'derived']
 data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
