@@ -17,7 +17,7 @@ data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planc
 # Planck as the first set of experiments should be a safe bet, except if you
 # also have LSS experiments).
 # If you have experiments without nuisance, you do not need to specify an
-y# additional entry in the over_sampling list (notice for instance that, out of
+# additional entry in the over_sampling list (notice for instance that, out of
 # the three Planck likelihoods used, only Planck_highl requires nuisance
 # parameters, therefore over_sampling has a length of two (cosmology, plus one
 # set of nuisance).
@@ -43,8 +43,8 @@ data.parameters['ln10^{10}A_s'] = [ 3.077,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
 data.parameters['frac_OEDE']     = [0.06,   0.0000001, 0.3,  0.014,    1, 'cosmo']
-data.parameters['log10_axion_ac']    = [-3,   -4.2, -2.6,  0.08,    1, 'cosmo']
-data.parameters['phi_ini']    	     = [1.,   0.01, 4.5,  0.04,    1, 'cosmo']
+#data.parameters['log10_axion_ac']    = [-3.6,   -3.9, -3.2,  0.08,    1, 'cosmo']
+data.parameters['phi_ini']    	     = [2.6,   1.8, 3.2,  0.04,    1, 'cosmo']
 
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
@@ -101,7 +101,7 @@ data.parameters['M']          = [-19.1,   None, None,  0.004,  1,'nuisance']
 
 # Derived parameters
 
-#data.parameters['YHe']             = [1, None, None, 0,     1,   'derived']
+data.parameters['YHe']             = [1, None, None, 0,     1,   'derived']
 #data.parameters['H0']              = [0, None, None, 0,     1,   'derived']
 #data.parameters['A_s']             = [0, None, None, 0,  1e-9,   'derived']
 data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
@@ -132,6 +132,7 @@ data.cosmo_arguments['output'] = 'mPk'
 data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 
+data.cosmo_arguments['log10_axion_ac'] = -3.58
 data.cosmo_arguments['adptative_stepsize'] = 100
 data.cosmo_arguments['n_axion'] = 3
 data.cosmo_arguments['scf_potential'] = 'axion'
