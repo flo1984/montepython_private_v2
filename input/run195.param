@@ -142,8 +142,8 @@ data.cosmo_arguments['sub_dom_cond'] = 1.e-6
 data.cosmo_arguments['decay_res_enhancement'] = 100
 #vanishing viscosity
 data.cosmo_arguments['three_cvis2_EDE'] = 0
-data.cosmo_arguments['three_eos_EDE'] = 2.0
-data.cosmo_arguments['three_ceff2_EDE'] = 2.0
+#data.cosmo_arguments['three_eos_EDE'] = 2.0
+#data.cosmo_arguments['three_ceff2_EDE'] = 2.0
 
 
 #makes sure that all modes start before the transition of EDE, i.e. before z=30k.
