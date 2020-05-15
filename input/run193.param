@@ -132,7 +132,7 @@ data.cosmo_arguments['output'] = 'mPk'
 data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 
-data.cosmo_arguments['log10_a_ADE'] = -3.46
+data.cosmo_arguments['a_ADE'] = 0.000346737
 data.cosmo_arguments['three_eos_ADE'] = 3.0
 data.cosmo_arguments['three_ceff2_ADE'] = 3.0
 data.cosmo_arguments['a_ini_over_a_ADE'] = 0.05
