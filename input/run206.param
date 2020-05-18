@@ -131,7 +131,7 @@ data.cosmo_arguments['T_ncdm'] = 0.71611
 data.cosmo_arguments['output'] = 'mPk'
 data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
-data.cosmo_arguments['phi_ini'] = 2.7
+data.cosmo_arguments['scf_parameters'] = "2.7,0.0"
 data.cosmo_arguments['log10_axion_ac'] = -3.58
 data.cosmo_arguments['adptative_stepsize'] = 100
 data.cosmo_arguments['n_axion'] = 3
