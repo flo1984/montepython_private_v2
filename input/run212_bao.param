@@ -102,6 +102,20 @@ data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
 data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
 #data.parameters['z_decay']          = [0, None, None, 0,     1,   'derived']
 
+#From eft_highzNGC
+
+data.parameters['b1_hN']  = [2, 0, 4, 0.5, 1,  'nuisance']
+data.parameters['c2_hN']  = [1.5, -4, 4, 0.5, 1,  'nuisance']
+
+data.parameters['b3']  = [0, -10, 10, 0, 1, 'nuisance']
+data.parameters['c4']  = [0, -10, 10, 0, 1, 'nuisance']
+data.parameters['b5']  = [0, -10, 10, 0, 1,  'nuisance']
+data.parameters['b6']  = [0, -10, 10, 0, 1,  'nuisance']
+data.parameters['b7']  = [0, -10, 10, 0, 1, 'nuisance']
+data.parameters['b8']  = [0, -10, 10, 0, 1, 'nuisance']
+data.parameters['b9']  = [0, -10, 10, 0, 1,  'nuisance']
+data.parameters['b10'] = [0, -10, 10, 0, 1,  'nuisance']
+
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
 
 data.cosmo_arguments['sBBN file'] = data.path['cosmo']+'/bbn/sBBN_2017.dat'
