@@ -1,5 +1,5 @@
 #------Experiments to test (separated with commas)-----
-data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planck_lensing','bao_fs_boss_dr12','bao_smallz_2014','H0_local','Pantheon','He','eft_highzNGC']
+data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planck_lensing','bao_smallz_2014','H0_local','Pantheon','He','eft_withbao_highzNGC','eft_withbao_highzSGC','eft_withbao_lowzNGC']
 
 
 #------ Settings for the over-sampling.

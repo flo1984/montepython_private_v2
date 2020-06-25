@@ -1,0 +1,42 @@
+# location of data files
+eft_withbao_lowzNGC.data_directory = data.path['data']
+
+eft_withbao_lowzNGC.model = 1
+
+# define kmin and kmax
+eft_withbao_lowzNGC.kmin = 0.01
+eft_withbao_lowzNGC.kmax = 0.23
+
+eft_withbao_lowzNGC.z = 0.57
+
+# can provide either a covmat or inverse covmat
+eft_withbao_lowzNGC.use_covmat = True
+eft_withbao_lowzNGC.covmat_file = 'pybird/Covariance/Cov_PsBAO_lowzNGC.txt'
+
+eft_withbao_lowzNGC.data_file = 'pybird/DataSims/ps1D_lowzNGC.dat'
+
+eft_withbao_lowzNGC.use_nuisance = ['b1_hN', 'c2_hN', 'b3', 'c4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10']
+
+eft_withbao_lowzNGC.use_window = True
+eft_withbao_lowzNGC.path_to_window = 'pybird/Window/'
+eft_withbao_lowzNGC.window_fourier_name = 'pynest_BOSS_LOWZ_NGC_z0p32'
+eft_withbao_lowzNGC.window_configspace_file = 'window_BOSS_LOWZ_NGC_z0p32.dat'
+
+eft_withbao_lowzNGC.nd = 4e-4
+eft_withbao_lowzNGC.Om_AP = 0.310
+eft_withbao_lowzNGC.zAP = 0.57
+
+eft_withbao_lowzNGC.km = 0.7
+eft_withbao_lowzNGC.knl = 0.7
+
+eft_withbao_lowzNGC.fibcol_window = True
+
+# Additional parameters
+#eft_withbao_lowzNGC.omega_b_BBNcenter = 0.02235
+#eft_withbao_lowzNGC.omega_b_BBNsigma = 0.0005
+
+eft_withbao_lowzNGC.zbao = 0.57
+eft_withbao_lowzNGC.baoH = 97.982
+eft_withbao_lowzNGC.baoD = 2160.59
+eft_withbao_lowzNGC.rs_rescale          = 1.
+eft_withbao_lowzNGC.rd_fid_in_Mpc       = 148.11
