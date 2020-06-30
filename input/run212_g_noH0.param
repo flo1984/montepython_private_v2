@@ -19,7 +19,7 @@ data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planc
 # the three Planck likelihoods used, only Planck_highl requires nuisance
 # parameters, therefore over_sampling has a length of two (cosmology, plus one
 # set of nuisance).
-data.over_sampling=[1, 5, 2, 5]
+data.over_sampling=[1, 5, 2, 5, 5, 5]
 
 #------ Parameter list -------
 
@@ -93,15 +93,6 @@ data.parameters['A_pol']             = [       1,     1,     1,          0,     
 
 data.parameters['M']          = [-19.1,   None, None,  0.004,  1,'nuisance']
 
-# Derived parameters
-
-data.parameters['YHe']             = [1, None, None, 0,     1,   'derived']
-#data.parameters['H0']              = [0, None, None, 0,     1,   'derived']
-#data.parameters['A_s']             = [0, None, None, 0,  1e-9,   'derived']
-data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
-data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
-#data.parameters['z_decay']          = [0, None, None, 0,     1,   'derived']
-
 #From eft_highzNGC
 
 data.parameters['b1_hN']  = [2, 0, 4, 0.5, 1,  'nuisance']
@@ -115,6 +106,17 @@ data.parameters['b7']  = [0, -10, 10, 0, 1, 'nuisance']
 data.parameters['b8']  = [0, -10, 10, 0, 1, 'nuisance']
 data.parameters['b9']  = [0, -10, 10, 0, 1,  'nuisance']
 data.parameters['b10'] = [0, -10, 10, 0, 1,  'nuisance']
+
+
+# Derived parameters
+
+data.parameters['YHe']             = [1, None, None, 0,     1,   'derived']
+#data.parameters['H0']              = [0, None, None, 0,     1,   'derived']
+#data.parameters['A_s']             = [0, None, None, 0,  1e-9,   'derived']
+data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
+data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
+#data.parameters['z_decay']          = [0, None, None, 0,     1,   'derived']
+
 
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
 
