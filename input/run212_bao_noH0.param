@@ -1,6 +1,6 @@
 #------Experiments to test (separated with commas)-----
 #LCDM run
-data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planck_lensing','bao_smallz_2014','Pantheon','He','eft_withbao_highzNGC','eft_withbao_highzSGC','eft_withbao_lowzNGC']
+data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planck_lensing','eft_withbao_highzNGC','eft_withbao_highzSGC','eft_withbao_lowzNGC','Pantheon','bao_smallz_2014','He']
 
 
 #------ Settings for the over-sampling.
@@ -19,7 +19,7 @@ data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planc
 # the three Planck likelihoods used, only Planck_highl requires nuisance
 # parameters, therefore over_sampling has a length of two (cosmology, plus one
 # set of nuisance).
-data.over_sampling=[1, 5, 2, 5]
+data.over_sampling=[1, 5, 5, 5, 5, 2]
 
 #------ Parameter list -------
 
@@ -97,6 +97,12 @@ data.parameters['M']          = [-19.1,   None, None,  0.004,  1,'nuisance']
 
 data.parameters['b1_hN']  = [2, 0, 4, 0.5, 1,  'nuisance']
 data.parameters['c2_hN']  = [1.5, -4, 4, 0.5, 1,  'nuisance']
+
+data.parameters['b1_hS']  = [2, 0, 4, 0.5, 1,  'nuisance']
+data.parameters['c2_hS']  = [1.5, -4, 4, 0.5, 1,  'nuisance']
+
+data.parameters['b1_lN']  = [2, 0, 4, 0.5, 1,  'nuisance']
+data.parameters['c2_lN']  = [1.5, -4, 4, 0.5, 1,  'nuisance']
 
 data.parameters['b3']  = [0, -10, 10, 0, 1, 'nuisance']
 data.parameters['c4']  = [0, -10, 10, 0, 1, 'nuisance']

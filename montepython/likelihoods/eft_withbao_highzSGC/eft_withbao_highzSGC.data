@@ -11,16 +11,16 @@ eft_withbao_highzSGC.z = 0.57
 
 # can provide either a covmat or inverse covmat
 eft_withbao_highzSGC.use_covmat = True
-eft_withbao_highzSGC.covmat_file = 'pybird/Covariance/Cov_PsBAO_highzSGC.txt'
+eft_withbao_highzSGC.covmat_file = 'pybird/Covariance/Cov_HectorPsBAO_SGC.txt'
 
 eft_withbao_highzSGC.data_file = 'pybird/DataSims/ps1D_highzSGC.dat'
 
-eft_withbao_highzSGC.use_nuisance = ['b1_hN', 'c2_hN', 'b3', 'c4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10']
+eft_withbao_highzSGC.use_nuisance = ['b1_hS', 'c2_hS', 'b3', 'c4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10']
 
 eft_withbao_highzSGC.use_window = True
 eft_withbao_highzSGC.path_to_window = 'pybird/Window/'
-eft_withbao_highzSGC.window_fourier_name = 'pynest_BOSS_CMASS_SGC_z0p57'
-eft_withbao_highzSGC.window_configspace_file = 'window_BOSS_CMASS_SGC_z0p57.dat'
+eft_withbao_highzSGC.window_fourier_name = 'pynest_BOSS_CMASS_SGC_z057'
+eft_withbao_highzSGC.window_configspace_file = 'window_BOSS_CMASS_SGC_z057.dat'
 
 eft_withbao_highzSGC.nd = 4.5e-4
 eft_withbao_highzSGC.Om_AP = 0.310
@@ -31,12 +31,8 @@ eft_withbao_highzSGC.knl = 0.7
 
 eft_withbao_highzSGC.fibcol_window = True
 
-# Additional parameters
-#eft_withbao_highzSGC.omega_b_BBNcenter = 0.02235
-#eft_withbao_highzSGC.omega_b_BBNsigma = 0.0005
-
 eft_withbao_highzSGC.zbao = 0.57
-eft_withbao_highzSGC.baoH = 97.982
-eft_withbao_highzSGC.baoD = 2160.59
+eft_withbao_highzSGC.baoH = 91.8465
+eft_withbao_highzSGC.baoD = 2215.45
 eft_withbao_highzSGC.rs_rescale          = 1.
 eft_withbao_highzSGC.rd_fid_in_Mpc       = 148.11
