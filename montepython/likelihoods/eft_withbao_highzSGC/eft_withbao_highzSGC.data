@@ -19,8 +19,8 @@ eft_withbao_highzSGC.use_nuisance = ['b1_hS', 'c2_hS', 'b3', 'c4', 'b5', 'b6', '
 
 eft_withbao_highzSGC.use_window = True
 eft_withbao_highzSGC.path_to_window = 'pybird/Window/'
-eft_withbao_highzSGC.window_fourier_name = 'pynest_BOSS_CMASS_SGC_z057'
-eft_withbao_highzSGC.window_configspace_file = 'window_BOSS_CMASS_SGC_z057.dat'
+eft_withbao_highzSGC.window_fourier_name = 'pynest_BOSS_CMASS_SGC_z0p57'
+eft_withbao_highzSGC.window_configspace_file = 'window_BOSS_CMASS_SGC_z0p57.dat'
 
 eft_withbao_highzSGC.nd = 4.5e-4
 eft_withbao_highzSGC.Om_AP = 0.310

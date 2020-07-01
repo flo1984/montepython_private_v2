@@ -19,8 +19,8 @@ eft_withbao_lowzNGC.use_nuisance = ['b1_lN', 'c2_lN', 'b3', 'c4', 'b5', 'b6', 'b
 
 eft_withbao_lowzNGC.use_window = True
 eft_withbao_lowzNGC.path_to_window = 'pybird/Window/'
-eft_withbao_lowzNGC.window_fourier_name = 'pynest_BOSS_LOWZ_NGC_z032'
-eft_withbao_lowzNGC.window_configspace_file = 'window_BOSS_LOWZ_NGC_z032.dat'
+eft_withbao_lowzNGC.window_fourier_name = 'pynest_BOSS_LOWZ_NGC_z0p32'
+eft_withbao_lowzNGC.window_configspace_file = 'window_BOSS_LOWZ_NGC_z0p32.dat'
 
 eft_withbao_lowzNGC.nd = 4.e-4
 eft_withbao_lowzNGC.Om_AP = 0.310
