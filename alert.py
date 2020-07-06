@@ -6,7 +6,7 @@ stamps = {"file1": 0}
 
 
 def check_file(path,pwd):
-    threading.Timer(1, check_file,args=[path,pwd]).start()    
+    threading.Timer(30*60, check_file,args=[path,pwd]).start()    
     date=os.path.getmtime(path)
     old_date=stamps["file1"]
     if (date!=old_date):
