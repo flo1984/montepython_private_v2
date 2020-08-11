@@ -39,7 +39,7 @@ data.parameters['h']            = [.715,   None, None,   .006,    1, 'cosmo']
 data.parameters['ln10^{10}A_s'] = [ 3.077,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
-data.parameters['w0_fld']    = 	  [-1,   -1.9, -.5  0.05,    1, 'cosmo']
+data.parameters['w0_fld']    = 	  [-1,   -1.9, -.5,  0.05,    1, 'cosmo']
 
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
@@ -71,7 +71,7 @@ data.parameters['YHe']             = [1, None, None, 0,     1,   'derived']
 #data.parameters['A_s']             = [0, None, None, 0,  1e-9,   'derived']
 data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
 data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
-data.parameters['z_decay']          = [0, None, None, 0,     1,   'derived']
+
 
 
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
@@ -98,8 +98,8 @@ data.cosmo_arguments['output'] = 'mPk'
 data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 
-data.cosmo_arguments['background_verbose'] = 4
-data.cosmo_arguments['perturbations_verbose'] = 2
+data.cosmo_arguments['background_verbose'] = 0
+data.cosmo_arguments['perturbations_verbose'] = 0
 data.cosmo_arguments['back_integration_stepsize'] = 5.e-3
 data.cosmo_arguments['Omega_Lambda'] = 0.0
 data.cosmo_arguments['wa_fld'] = 0.0
