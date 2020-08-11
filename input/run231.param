@@ -37,7 +37,7 @@ data.parameters['omega_cdm']    = [0.133,   None, None, 0.0027,    1, 'cosmo']
 data.parameters['h']            = [.715,   None, None,   .006,    1, 'cosmo']
 data.parameters['ln10^{10}A_s'] = [ 3.077,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
-data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
+#data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
 data.parameters['w0_fld']    = 	  [-1,   -1.9, -.5,  0.05,    1, 'cosmo']
 
 
