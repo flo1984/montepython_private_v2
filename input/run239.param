@@ -18,7 +18,7 @@ data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planc
 # the three Planck likelihoods used, only Planck_highl requires nuisance
 # parameters, therefore over_sampling has a length of two (cosmology, plus one
 # set of nuisance).
-data.over_sampling=[1, 5,2]
+data.over_sampling=[1, 5]
 
 #------ Parameter list -------
 
