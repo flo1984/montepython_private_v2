@@ -46,7 +46,7 @@ data.parameters['frac_EDE']    = [0.13,   0.0000001, 0.25,  0.03,    1, 'cosmo']
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
 data.parameters['A_planck']          = [ 1.00061,   0.9,   1.1,     0.0025,     1, 'nuisance']
-data.parameters['M']          = [-19.3,   -19.8, -19.0,  0.03,  1,'nuisance']
+
 
 # Derived parameters
 
