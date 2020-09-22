@@ -34,7 +34,7 @@ data.experiments=['Planck_highl_TTTEEE_lite','Planck_lowl_TT','Planck_lowl_EE','
 
 # Cosmological parameters list
 
-data.parameters['omega_b']      = [ 2.29,   2.1, 2.5,  0.02, 0.01, 'cosmo']
+data.parameters['omega_b']      = [ 2.29,   2.0, 2.5,  0.02, 0.01, 'cosmo']
 data.parameters['omega_cdm']    = [0.13,   0.10, 0.18, 0.0035,    1, 'cosmo']
 data.parameters['h']            = [.715,   0.62, 0.78,   .01,    1, 'cosmo']
 data.parameters['ln10^{10}A_s'] = [ 3.07,   2.9, 3.2, 0.015,    1, 'cosmo']
