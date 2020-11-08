@@ -41,7 +41,7 @@ data.parameters['h']            = [.715,   None, None,   .006,    1, 'cosmo']
 data.parameters['ln10^{10}A_s'] = [ 3.077,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
-data.parameters['frac_EDE']    = [0.14,   0.0000001, 0.3,  0.014,    1, 'cosmo']
+data.parameters['f_NEDE']    = [0.14,   0.0000001, 0.3,  0.014,    1, 'cosmo']
 data.parameters['log10z_*']    = [3.44,   3, 4,  0.08,    1, 'cosmo']
 
 
