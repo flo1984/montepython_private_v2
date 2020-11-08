@@ -144,7 +144,7 @@ data.cosmo_arguments['three_ceff2_EDE'] = 2.0
 data.cosmo_arguments['omega_cdm']=0.0
 data.cosmo_arguments['xi_idr']=0.1
 data.cosmo_arguments['stat_f_idr']=1
-data.cosmo_arguments['Gamma_0_ncfm']=1.65e-7
+data.cosmo_arguments['Gamma_0_nadm']=1.65e-7
 data.cosmo_arguments['alpha_idm_dr']=0.75
 data.cosmo_arguments['beta_idr']=0.75
 
