@@ -133,6 +133,7 @@ data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 data.cosmo_arguments['background_verbose'] = 4
 data.cosmo_arguments['perturbations_verbose'] = 2
+data.cosmo_arguments['thermodynamics_verbose'] = 2
 data.cosmo_arguments['Junction_tag'] = 1
 data.cosmo_arguments['back_integration_stepsize'] = 5.e-3
 data.cosmo_arguments['sub_dom_cond'] = 1.e-6
