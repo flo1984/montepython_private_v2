@@ -142,6 +142,14 @@ data.cosmo_arguments['three_cvis2_EDE'] = 0
 data.cosmo_arguments['three_eos_EDE'] = 2.0
 data.cosmo_arguments['three_ceff2_EDE'] = 2.0
 data.cosmo_arguments['omega_cdm']=0.0
+data.cosmo_arguments['xi_idr']=0.1
+data.cosmo_arguments['stat_f_idr']=1
+data.cosmo_arguments['Gamma_0_ncfm']=1.65e-7
+data.cosmo_arguments['alpha_idm_dr']=0.75
+data.cosmo_arguments['beta_idr']=0.75
+
+
+
 
 #makes sure that all modes start before the transition of EDE, i.e. before z=30k.
 data.cosmo_arguments['start_large_k_at_tau_h_over_tau_k'] = 0.000001
