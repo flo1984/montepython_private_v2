@@ -815,7 +815,11 @@ class Data(object):
             elif elem == 'log10z_*':
                 self.cosmo_arguments['NEDE_z_decay'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
-     
+
+            elif elem == 'log10mass':
+                self.cosmo_arguments['NEDE_trigger_mass'] = 10**self.cosmo_arguments[elem]
+                del self.cosmo_arguments[elem]
+            
             elif elem == 'ln10^{10}A_s':
                 self.cosmo_arguments['A_s'] = math.exp(
                     self.cosmo_arguments[elem]) / 1.e10

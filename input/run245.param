@@ -42,7 +42,7 @@ data.parameters['ln10^{10}A_s'] = [ 3.077,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
 data.parameters['f_HNEDE']    = [0.14,   0.0000001, 0.3,  0.014,    1, 'cosmo']
-data.parameters['log10z_*']    = [4.8617,   3, 6,  0.08,    1, 'cosmo']
+data.parameters['log10z_*']    = [3.7,   3, 4,  0.08,    1, 'cosmo']
 
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
@@ -145,7 +145,14 @@ data.cosmo_arguments['three_ceff2_EDE'] = 2.0
 data.cosmo_arguments['omega_cdm']=0.0
 data.cosmo_arguments['xi_idr']=0.1
 data.cosmo_arguments['stat_f_idr']=1
-data.cosmo_arguments['Gamma_0_nadm']=1.65e-15
+#data.cosmo_arguments['Gamma_0_nadm']=1.65e-12
+
+data.cosmo_arguments['b_idr']=1.1e-7
+data.cosmo_arguments['a_idm_dr']=1.65e-16
+data.cosmo_arguments['idr_nature']='free-streaming'
+#data.cosmo_arguments['idr_nature']='fluid'
+
+
 data.cosmo_arguments['alpha_idm_dr']=0.75
 data.cosmo_arguments['beta_idr']=0.75
 
