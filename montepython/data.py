@@ -823,6 +823,11 @@ class Data(object):
                 self.cosmo_arguments['NEDE_trigger_mass'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
 
+            elif elem == 'log10(1-alpha)':
+                self.cosmo_arguments['alpha_NEDE'] = 1-10**self.cosmo_arguments[elem]
+                del self.cosmo_arguments[elem]
+                
+                
             elif elem == 'frac_EDE':
                 
                 frac_EDE = self.cosmo_arguments[elem]
