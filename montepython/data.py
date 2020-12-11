@@ -829,7 +829,7 @@ class Data(object):
                 
 
             elif elem == 'trigger':
-                self.cosmo_arguments['Bubble_trigger_H_over_m'] = elem
+                self.cosmo_arguments['Bubble_trigger_H_over_m'] = self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
 
 
