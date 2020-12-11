@@ -827,6 +827,12 @@ class Data(object):
                 self.cosmo_arguments['alpha_NEDE'] = 1-10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
                 
+
+            elif elem == 'trigger':
+                self.cosmo_arguments['Bubble_trigger_H_over_m'] = elem
+                del self.cosmo_arguments[elem]
+
+
                 
             elif elem == 'frac_EDE':
                 
@@ -848,7 +854,7 @@ class Data(object):
 
                 del self.cosmo_arguments[elem]
 
-
+            
                 
             elif elem == 'ln10^{10}A_s':
                 self.cosmo_arguments['A_s'] = math.exp(
