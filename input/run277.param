@@ -165,6 +165,9 @@ data.cosmo_arguments['decay_res_enhancement'] = 100
 data.cosmo_arguments['three_cvis2_EDE'] = 0
 data.cosmo_arguments['NEDE_ceff_nature'] = 'tracking'
 
+data.cosmo_arguments['start_large_k_at_tau_h_over_tau_k'] = 0.01
+data.cosmo_arguments['start_small_k_at_tau_c_over_tau_h'] = 0.0005
+
 
 #------ Mcmc parameters ----
 
