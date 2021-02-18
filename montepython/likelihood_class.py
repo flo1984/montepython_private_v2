@@ -2831,7 +2831,7 @@ class Likelihood_bird(Likelihood_eft):
     def loglkl(self, cosmo, data):
 
         bval = [data.mcmc_parameters[k]['current'] * data.mcmc_parameters[k]['scale'] for k in self.use_nuisance]
-
+        #print(bval[4],bval[0],bval[1])
         b1 = bval[0]
         b2 = (bval[1] + bval[3]) / np.sqrt(2.)
         b4 = (bval[1] - bval[3]) / np.sqrt(2.)
