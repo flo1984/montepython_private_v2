@@ -97,38 +97,41 @@ data.parameters['A_pol']             = [       1,     1,     1,          0,     
 
 data.parameters['b1_hN']  = [2, 0, 4, 0.5, 1,  'nuisance']
 data.parameters['c2_hN']  = [1.5, -4, 4, 0.5, 1,  'nuisance']
-data.parameters['b3_hN']  = [0, -10, 10, .5, 1, 'nuisance']
-data.parameters['c4_hN']  = [0, -10, 10, .5, 1, 'nuisance']
-data.parameters['b5_hN']  = [0, -10, 10, .5, 1,  'nuisance']
-data.parameters['b6_hN']  = [0, -10, 10, .5, 1,  'nuisance']
-data.parameters['b8_hN']  = [0, -10, 10, .5, 1, 'nuisance']
-data.parameters['b10_hN'] = [0, -10, 10, .5, 1,  'nuisance']
-
-
-
+data.parameters['b3_hN']  = [0.1, -10, 10, .5, 1, 'nuisance']
+data.parameters['c4_hN']  = [0.1, -10, 10, .5, 1, 'nuisance']
+data.parameters['b5_hN']  = [0.1, -10, 10, .5, 1,  'nuisance']
+data.parameters['b6_hN']  = [0.1, -10, 10, .5, 1,  'nuisance']
+data.parameters['b7_hN']  = [0, -10, 10, 0, 1, 'nuisance']
+data.parameters['b8_hN']  = [0.1, -10, 10, .5, 1, 'nuisance']
+data.parameters['b9_hN']  = [0, -10, 10, 0, 1,  'nuisance']
+data.parameters['b10_hN'] = [0.1, -10, 10, .5, 1,  'nuisance']
 
 data.parameters['b1_hS']  = [2, 0, 4, 0.5, 1,  'nuisance']
 data.parameters['c2_hS']  = [1.5, -4, 4, 0.5, 1,  'nuisance']
-data.parameters['b3_hS']  = [0, -10, 10, .5, 1, 'nuisance']
-data.parameters['c4_hS']  = [0, -10, 10, .5, 1, 'nuisance']
-data.parameters['b5_hS']  = [0, -10, 10, .5, 1,  'nuisance']
-data.parameters['b6_hS']  = [0, -10, 10, .5, 1,  'nuisance']
-data.parameters['b8_hS']  = [0, -10, 10, .5, 1, 'nuisance']
-data.parameters['b10_hS'] = [0, -10, 10, .5, 1,  'nuisance']
+data.parameters['b3_hS']  = [0.1, -10, 10, .5, 1, 'nuisance']
+data.parameters['c4_hS']  = [0.1, -10, 10, .5, 1, 'nuisance']
+data.parameters['b5_hS']  = [0.1, -10, 10, .5, 1,  'nuisance']
+data.parameters['b6_hS']  = [0.1, -10, 10, .5, 1,  'nuisance']
+data.parameters['b7_hS']  = [0, -10, 10, 0, 1, 'nuisance']
+data.parameters['b8_hS']  = [0.1, -10, 10, .5, 1, 'nuisance']
+data.parameters['b9_hS']  = [0, -10, 10, 0, 1,  'nuisance']
+data.parameters['b10_hS'] = [0.1, -10, 10, .5, 1,  'nuisance']
 
 
 data.parameters['b1_lN']  = [2, 0, 4, 0.5, 1,  'nuisance']
 data.parameters['c2_lN']  = [1.5, -4, 4, 0.5, 1,  'nuisance']
-data.parameters['b3_lN']  = [0, -10, 10, .5, 1, 'nuisance']
-data.parameters['c4_lN']  = [0, -10, 10, .5, 1, 'nuisance']
-data.parameters['b5_lN']  = [0, -10, 10, .5, 1,  'nuisance']
-data.parameters['b6_lN']  = [0, -10, 10, .5, 1,  'nuisance']
-data.parameters['b8_lN']  = [0, -10, 10, .5, 1, 'nuisance']
-data.parameters['b10_lN'] = [0, -10, 10, .5, 1,  'nuisance']
+data.parameters['b3_lN']  = [0.1, -10, 10, .5, 1, 'nuisance']
+data.parameters['c4_lN']  = [0.1, -10, 10, .5, 1, 'nuisance']
+data.parameters['b5_lN']  = [0.1, -10, 10, .5, 1,  'nuisance']
+data.parameters['b6_lN']  = [0.1, -10, 10, .5, 1,  'nuisance']
+data.parameters['b7_lN']  = [0, -10, 10, 0, 1, 'nuisance']
+data.parameters['b8_lN']  = [0.1, -10, 10, .5, 1, 'nuisance']
+data.parameters['b9_lN']  = [0, -10, 10, 0, 1,  'nuisance']
+data.parameters['b10_lN'] = [0.1, -10, 10, .5, 1,  'nuisance']
 
 
-data.parameters['b7']  = [0, -10, 10, 0, 1, 'nuisance']
-data.parameters['b9']  = [0, -10, 10, 0, 1,  'nuisance']
+
+
 
 data.parameters['M']          = [-19.1,   None, None,  0.004,  1,'nuisance']
 

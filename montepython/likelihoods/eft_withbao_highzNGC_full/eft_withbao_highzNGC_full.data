@@ -17,7 +17,7 @@ eft_withbao_highzNGC_full.covmat_file = 'pybird/Covariance/Cov_PsBAO_highzNGC.tx
 
 eft_withbao_highzNGC_full.data_file = 'pybird/DataSims/ps1D_highzNGC.dat'
 
-eft_withbao_highzNGC_full.use_nuisance = ['b1_hN', 'c2_hN', 'b3_hN', 'c4_hN', 'b5_hN', 'b6_hN', 'b7', 'b8_hN', 'b9', 'b10_hN']
+eft_withbao_highzNGC_full.use_nuisance = ['b1_hN', 'c2_hN', 'b3_hN', 'c4_hN', 'b5_hN', 'b6_hN', 'b7_hN', 'b8_hN', 'b9_hN', 'b10_hN']
 
 eft_withbao_highzNGC_full.use_window = True
 eft_withbao_highzNGC_full.path_to_window = 'pybird/Window/'
