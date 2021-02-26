@@ -2759,7 +2759,7 @@ class Likelihood_bird(Likelihood_eft):
         self.need_cosmo_arguments(data, {'output': 'mPk', 'z_max_pk': self.z, 'P_k_max_h/Mpc': 1.})
 
         print ("-- bird settings --")
-
+        
         try:
             if self.birdlkl is 'full': print ('bird lkl: full')
             elif self.birdlkl is 'marg': print ('bird lkl: marg')

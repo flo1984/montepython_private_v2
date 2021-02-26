@@ -2,12 +2,14 @@
 eft_withbao_highzNGC_full.data_directory = data.path['data']
 
 eft_withbao_highzNGC_full.model = 1
+eft_withbao_highzNGC_full.birdlkl = 'fastfull'
 
 # define kmin and kmax
 eft_withbao_highzNGC_full.kmin = 0.01
 eft_withbao_highzNGC_full.kmax = 0.23
 
 eft_withbao_highzNGC_full.z = 0.57
+eft_withbao_highzNGC_full.zz = 0.57001
 
 # can provide either a covmat or inverse covmat
 eft_withbao_highzNGC_full.use_covmat = True

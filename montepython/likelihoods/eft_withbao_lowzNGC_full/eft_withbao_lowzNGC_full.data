@@ -2,6 +2,8 @@
 eft_withbao_lowzNGC_full.data_directory = data.path['data']
 
 eft_withbao_lowzNGC_full.model = 1
+eft_withbao_lowzNGC_full.birdlkl = 'fastfull'
+
 
 # define kmin and kmax
 eft_withbao_lowzNGC_full.kmin = 0.01
