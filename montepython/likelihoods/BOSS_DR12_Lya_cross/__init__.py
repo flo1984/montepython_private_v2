@@ -3,7 +3,9 @@ import numpy as np
 from montepython import io_mp
 from montepython.likelihood_class import Likelihood
 import scipy.constants as const
-import scan_util as util
+import sys
+sys.path.append('.')
+from . import scan_util as util
 
 class BOSS_DR12_Lya_cross(Likelihood):
 

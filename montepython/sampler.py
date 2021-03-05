@@ -150,13 +150,13 @@ def read_args_from_bestfit(data, bestfit):
             data.mcmc_parameters[elem]['last_accepted'] = \
                 bestfit_values[bestfit_names.index(elem)] / \
                 data.mcmc_parameters[elem]['scale']
-            sys.stdout.write('from best-fit file : '+ elem + ' = ')
+            print('from best-fit file : {} = '.format(elem))
             print(bestfit_values[bestfit_names.index(elem)] / \
                 data.mcmc_parameters[elem]['scale'])
         else:
             data.mcmc_parameters[elem]['last_accepted'] = \
                 data.mcmc_parameters[elem]['initial'][0]
-            sys.stdout.write('from input file    : ' + elem + ' = ')
+            print('from input file : {} = '.format(elem))
             print(data.mcmc_parameters[elem]['initial'][0])
 
 
@@ -339,7 +339,7 @@ def get_covariance_matrix(cosmo, data, command_line):
 
     # Final print out, the actually used covariance matrix
     if not command_line.silent and not command_line.quiet:
-        sys.stdout.write('\nDeduced starting covariance matrix:\n')
+        print('\nDeduced starting covariance matrix:\n')
         print(parameter_names)
         print(matrix)
 

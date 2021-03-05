@@ -1,3 +1,13 @@
+v3.4.0
+	+ Added BBN likelihoods from 1907.11594 (N. Schoeneberg, D. C. Hooper)
+	+ Added H0LICOW likelihoods from 1907.04869 (S. Taubenberger, S. Suyu)
+	+ New feature: experiment specifications passed in .param files now overwrite ones in .data files, which allows for testing different likelihood specifications simultaneously (N. Schoeneberg)
+	+ New plotting features: to_derive allows to add new parameters in the plot file without overwriting the old parameter, and to_reorder allows to choose the order of parameters for the plots (N. Schoeneberg)
+	+ Significant speed-up of Pantheon likelihood (J. Renk)
+	+ Improved treatment of tick limits, sigma bounds, and Omega_m / omega_m (N. Schoeneberg)
+	+ Various bugfixes related to python2 / python3 compatibility (D. C. Hooper, N. Schoeneberg, F. Agocs, J. Renk)
+	+Various additional bugfixes
+---------------------------------------------------------------------
 v3.3.0  + Added python 3 compatibility, python 2.7 still supported (N. Schöneberg, F. Köhlinger)
 	+ Added Lyman-alpha alpha-beta-gamma likelihood from 1907.01496 (M. Archidiacono, D.C. Hooper, R. Murgia)
 	+ Added new type of parameters, derived_lkl, that behave like derived parameters of the likelihood and are not passed to class (D.C. Hooper)

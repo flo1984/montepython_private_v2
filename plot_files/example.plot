@@ -2,12 +2,17 @@
 # Modify as desired by uncommenting relevant lines starting with "info."
 
 #### Options related to the parameters.
-# Use this to replace one column with a new parameter,
-# defined as a function of one or more existing parameters.
-# Note that any parameter redefined will have those changes included
-# in subsequent parameter redefinitions. The order changes are applied
-# is the order in the log.param, NOT the order in this dictionary!
-#info.redefine = {'omega_cdm': '(0.01*omega_b+omega_cdm)/(H0/100.)**2'}
+# Use this to derive a new parameter.
+# The new parameter can be defined as a function of one or more existing
+# parameters. The derived parameter can be included for further derived
+# parameters if in the correct order
+#info.to_derive = {'der1':'H0*H0*omega_cdm','der2':'der1*H0'}
+
+# Use this to re-order the parameters
+# The parameters in this list will be plotted first, using the order provided.
+# Afterwards (if not excluded by to_plot) the other parameters are plotted
+# in the order they appear in the .param file.
+#info.to_reorder = ['der2','H0']
 
 # Use this to rename a parameter (e.g. to make it look better in the labels).
 # If you don't use dollars '$...$' the code will try automatically
@@ -42,13 +47,13 @@
 
 
 #### Customize appearance of contours.
-# If you want to change the order of colors
-# (same order as for legendnames).
-#info.MP_color_cycle = [info.MP_color['Green'], info.MP_color['Orange'], info.MP_color['Blue']]
-
 # You may actually even redefine the colors
 # (each pair stands for [95% contour color,68% contour color]).
 #info.MP_color = {'Red':['#E37C80','#CE121F'],'Blue':['#7A98F6','#1157EF'],'Green':['#88B27A','#297C09'],'Orange':['#F3BE82','#ED920F'],'Grey':['#ABABAB','#737373'],'Purple':['#B87294','#88004C']}
+
+# If you want to change the order of colors
+# (same order as for legendnames).
+#info.MP_color_cycle = [info.MP_color['Green'], info.MP_color['Orange'], info.MP_color['Blue']]
 
 # Adjust the transparency of the lines and filled contours
 # (same order as for legendnames).
@@ -95,14 +100,19 @@
 
 # Width of gaussian smoothing for plotting posteriors in units
 # of bin size, increase for smoother appearance.
+# If non-Gaussian posteriors recommend setting to 0.35
 #info.gaussian_smoothing = 0.5
 
 # Interpolation factor for plotting posteriors, 1 means no interpolation,
 # increase for smoother contours (integer).
+# If non-Gaussian posteriors recommend setting to 2
 #info.interpolation_smoothing = 4
 
 # Smoothing scheme for 1d posteriors, 0 means no smoothing, 1 means cubic
 # interpolation, higher means fitting ln(L) with polynomial of order n (integer).
+# IF NON-GAUSSIAN POSTERIORS TURN THIS OFF (set to 0)
+# There are recommended lines to flip in montepython/analyze.py to make
+# plots nicer in this case. Search for posterior_smoothing
 #info.posterior_smoothing = 5
 
 
@@ -112,6 +122,18 @@
 # E.g. you can add a band showing an H0 measurement or any other custom contours.
 #info.custom1d = []
 #info.custom2d = ['add_h_contour.py','add_sigma8_Omegam_contour.py']
+
+
+#### Old feature:
+# Use this to replace one column with a new value,
+# defined as a function of one or more existing parameters.
+# Note that any parameter redefined will have those changes included
+# in subsequent parameter redefinitions. The order changes are applied
+# is the order in the log.param, NOT the order in this dictionary!
+# This will also modify the bestfit file in a possibly unsafe way.
+#info.redefine = {'omega_cdm': '(0.01*omega_b+omega_cdm)/(H0/100.)**2'}
+
+
 # Any other lines of plain python can be written here without special
 # formatting, they will be executed as extra lines of codes, but only
 # at a precise point in the initialisation of the "Information" class.

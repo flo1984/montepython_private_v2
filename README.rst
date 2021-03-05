@@ -15,6 +15,22 @@ for the bibtex entries).
 
 Recent changelog
 ----------------
+v3.4.0, Feb 25, 2021
+* Added BBN likelihoods from 1907.11594 (N. Schoeneberg, D. C. Hooper)
+
+* Added H0LICOW likelihoods from 1907.04869 (S. Taubenberger, S. Suyu)
+
+* New feature: experiment specifications passed in .param files now overwrite ones in .data files, which allows for testing different likelihood specifications simultaneously (N. Schoeneberg)
+
+* New plotting features: to_derive allows to add new parameters in the plot file without overwriting the old parameter, and to_reorder allows to choose the order of parameters for the plots (N. Schoeneberg)
+
+* Significant speed-up of Pantheon likelihood (J. Renk)
+
+* Improved treatment of tick limits, sigma bounds, and Omega_m / omega_m (N. Schoeneberg)
+
+* Various bugfixes related to python2 / python3 compatibility (D. C. Hooper, N. Schoeneberg, F. Agocs, J. Renk)
+
+* Various additional bugfixes
 
 v3.3.0, Jan 23, 2020
 

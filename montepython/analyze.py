@@ -48,7 +48,10 @@ from io_mp import dictitems,dictvalues,dictkeys
 
 # Defined to remove the burnin for all the points that were produced before the
 # first time where -log-likelihood <= min-minus-log-likelihood+LOG_LKL_CUTOFF
+#### Change the following line for MultiNest to 1e300
+#### as we do not want to remove burn-in
 LOG_LKL_CUTOFF = 3
+# LOG_LKL_CUTOFF = 1e300
 
 NUM_COLORS = 6
 
@@ -267,9 +270,6 @@ def convergence(info):
     """
     # Recovering parameter names and scales, creating tex names,
     extract_parameter_names(info)
-    # Now that the number of parameters is known, the array containing bounds
-    # can be initialised
-    info.bounds = np.zeros((len(info.ref_names), len(info.levels), 2))
 
     # Circle through all files to find the global maximum of likelihood
     #print('--> Finding global maximum of likelihood')
@@ -284,7 +284,14 @@ def convergence(info):
     #print('--> Removing burn-in')
     spam = remove_bad_points(info)
 
+    # Re-Map the given parameters
     info.remap_parameters(spam)
+
+    # Now that the number of parameters is known
+    # (and updated from the remap_parameters)
+    # the array containing bounds can be initialised
+    info.bounds = np.zeros((len(info.ref_names), len(info.levels), 2))
+
     # Now that the list spam contains all the different chains removed of
     # their respective burn-in, proceed to the convergence computation
 
@@ -530,6 +537,17 @@ def compute_posterior(information_instances):
             x_span = conf.force_limits[name][1]-conf.force_limits[name][0]
             tick_min = conf.force_limits[name][0] +0.1*x_span
             tick_max = conf.force_limits[name][1] -0.1*x_span
+            # [NS] We want to make sure that if there are boundaries, we don't overshoot them by the force_limits
+            # (In force_limits you can only provide the limits up to the 0.1*x_span rescaling)
+            bounds = info.boundaries[info.native_index]
+            # Left boundary
+            if bounds[0] is not None:
+                if conf.force_limits[name][0] <= bounds[0]:
+                    tick_min = bounds[0]
+            # Right boundary
+            if bounds[-1] is not None:
+                if conf.force_limits[name][1] > bounds[-1]:
+                    tick_max = bounds[-1]
             ticks = np.linspace(tick_min,
                                 tick_max,
                                 info.ticknumber)
@@ -550,7 +568,10 @@ def compute_posterior(information_instances):
                 # simply the histogram from the chains, with few bins
                 #
                 info.hist, info.bin_edges = np.histogram(
+                    # TB: without posterior_smoothing it can be nice to increase the
+                    # number of bins here.
                     info.chain[:, info.native_index+2], bins=info.bins,
+                    #info.chain[:, info.native_index+2], bins=2*info.bins,
                     weights=info.chain[:, 0], normed=False, density=False)
                 info.hist = info.hist/info.hist.max()
                 # Correct for temperature
@@ -586,6 +607,8 @@ def compute_posterior(information_instances):
                 interpolation_factor = float(len(info.interp_grid))/float(len(info.bincenters))
                 # factor for gaussian smoothing
                 sigma = interpolation_factor*info.gaussian_smoothing
+                # TB: A nice option when turning off posterior_smoothing is to turn on the following
+                # two lines of code
                 # smooth
                 #smoothed_interp_hist = scipy.ndimage.filters.gaussian_filter(info.interp_hist,sigma)
                 # re-normalised
@@ -598,6 +621,7 @@ def compute_posterior(information_instances):
                     ##################################################
                     plot = ax2d.plot(
                         info.interp_grid,
+                        # TB: if no posterior_smoothing uncomment/recomment the next two lines of code
                         # version without gaussian smoothing:
                         info.interp_hist,
                         # version with gaussian smoothing (commented)
@@ -680,6 +704,7 @@ def compute_posterior(information_instances):
                     ##################################################
                     ax1d.plot(
                         info.interp_grid,
+                        # TB: if no posterior_smoothing uncomment/recomment the next two lines of code
                         # 1d posterior without gaussian filter:
                         info.interp_hist,
                         # gaussian filtered 1d posterior (commented):
@@ -730,6 +755,7 @@ def compute_posterior(information_instances):
                         # apply gaussian smoothing (obsolete - we don't do it anymore since the option --posterior-smoothing
                         # was defined, so we commented out this part)
                         #
+                        # TB: if no posterior_smoothing uncomment the next two lines of code
                         # smooth
                         #smoothed_interp_lkl_mean = scipy.ndimage.filters.gaussian_filter(interp_lkl_mean,sigma)
                         # re-normalised
@@ -751,6 +777,7 @@ def compute_posterior(information_instances):
                             #          alpha = info.alphas[info.id])
                             # smoothed and interpolated mean likelihoods:
                             ax2d.plot(interp_grid,
+                                      # TB: if no posterior_smoothing uncomment/recomment the next two lines of code
                                       # version without gaussian smoothing:
                                       interp_lkl_mean,
                                       # version with gaussian smoothing (commented)
@@ -770,6 +797,7 @@ def compute_posterior(information_instances):
                             #          alpha = info.alphas[info.id])
                             # smoothed and interpolated mean likelihoods:
                             ax1d.plot(interp_grid,
+                                      # TB: if no posterior_smoothing uncomment/recomment the next two lines of code
                                       # version without gaussian smoothing
                                       interp_lkl_mean,
                                       # version with gaussian smoothing (commented)
@@ -2078,6 +2106,18 @@ class Information(object):
         new ones. For instance :code:`{'beta_plus_lambda':'beta+lambda'}`
 
         """
+        self.to_derive = {}
+        """
+        Array of names to re-order in the plotting. Names not included in this list
+        will appear at the end in their usual ordering
+
+        """
+        self.to_reorder = []
+        """
+        Dictionary whose keys are new parameter names and values are formulas to calculate them.
+        For instance :code:`{'beta_plus_lambda':'beta+lambda'}`
+
+        """
         self.to_plot = []
         """
         Array of names of parameters to plot. If left empty, all will be
@@ -2098,8 +2138,8 @@ class Information(object):
         # Assign a unique id to this instance
         self.id = next(self._ids)
 
-        # Defining the sigma contours (1, 2 and 3-sigma)
-        self.levels = np.array([68.26, 95.4, 99.7])/100.
+        # Defining the sigma contours (1, 2 and 3-sigma, and 95% CL)
+        self.levels = np.concatenate([scipy.special.erf(np.array([1, 2, 3])/np.sqrt(2)),[0.95]])
 
         # Follows a bunch of initialisation to provide default members
         self.ref_names, self.backup_names = [], []
@@ -2134,7 +2174,7 @@ class Information(object):
         # overrides the command line options
         if command_line.optional_plot_file:
             plot_file_vars = {'info': self,'plt': plt}
-            exec(open(command_line.optional_plot_file, plot_file_vars).read())
+            exec(open(command_line.optional_plot_file).read(), plot_file_vars)
 
         # check and store keep_fraction
         if command_line.keep_fraction<=0 or command_line.keep_fraction>1:
@@ -2173,6 +2213,61 @@ class Information(object):
                             exec("%s = spam[i][:, %i]" % (name, index))
                         # Assign to the desired index the combination
                         exec("spam[i][:, %i] = %s" % (index_to_change, value))
+        if hasattr(self, 'to_derive'):
+            for key, value in dictitems(self.to_derive):
+                print(' /|\  Creating new parameter', key)
+                print('/_o_\ with formula ' + key + " = "+value)
+                # Recover all indices of all variables present in the
+                # remapping
+                variable_names = [elem for elem in self.backup_names if
+                                  value.find(elem) != -1]
+                indices = [self.backup_names.index(name)+2 for name in
+                           variable_names]
+                # Now loop over all files in spam
+                for i in xrange(len(spam)):
+                    # For each file expand the dimension of spam by one
+                    spam[i] = np.hstack([spam[i],np.empty((len(spam[i]),1))])
+                    # Assign local variables to their values
+                    for index, name in zip(indices, variable_names):
+                        exec("%s = spam[i][:, %i]" % (name, index))
+                    # Assign to to the appended array the combination
+                    exec("spam[i][:,-1] = %s" % (value))
+
+                # If everything was successfull, add the corresponding info
+                self.ref_names.append(key)
+                self.tex_names.append(io_mp.get_tex_name(key,number=1))
+                self.backup_names.append(key)
+                self.boundaries.append([None,None])
+                N = len(self.scales)
+                self.scales = np.vstack([np.hstack([self.scales,np.zeros((N,1))]),np.zeros((N+1,1)).T])
+                self.scales[-1,-1]=1
+                self.rescales = np.vstack([np.hstack([self.rescales,np.zeros((N,1))]),np.zeros((N+1,1)).T])
+                self.rescales[-1,-1]=1
+                self.number_parameters +=1
+                self.plotted_parameters.append(key)
+                self.centers = np.append(self.centers,0)
+        if hasattr(self, 'to_reorder'):
+            if(len(self.to_reorder)>0):
+                indices = [self.backup_names.index(name) for name in self.to_reorder]
+                missing_indices = [x for x in np.arange(len(self.backup_names)) if x not in indices]
+                indices = np.concatenate([indices,missing_indices])
+                self.ref_names = [self.ref_names[i] for i in indices]
+                self.tex_names = [self.tex_names[i] for i in indices]
+                self.backup_names = [self.backup_names[i] for i in indices]
+                self.boundaries = [self.boundaries[i] for i in indices]
+                self.scales = self.scales[indices][:,indices]
+                self.rescales = self.rescales[indices][:,indices]
+                self.centers = self.centers[indices]
+                # Re-sort spam (barely any overhead, due to numpy's internal memory views)
+                for i in xrange(len(spam)):
+                    spam[i][:,2:] = spam[i][:,indices+2]
+                # Play the same game independently for plotted_parameters
+                # since these might be a lot fewer
+                indices = [self.plotted_parameters.index(name) for name in self.to_reorder]
+                if(len(indices)>0):
+                  missing_indices = [x for x in np.arange(len(self.plotted_parameters)) if x not in indices]
+                  indices = np.concatenate([indices,missing_indices])
+                  self.plotted_parameters = [self.plotted_parameters[i] for i in indices]
 
     def define_ticks(self):
         """
@@ -2271,6 +2366,10 @@ class Information(object):
                     self.mean+self.bounds[:, 2, 0])
             write_h(h_info, self.indices, '3-sigma < ', '% .6e',
                     self.mean+self.bounds[:, 2, 1])
+            write_h(h_info, self.indices, '95% > ', '% .6e',
+                    self.mean+self.bounds[:, -1, 0])
+            write_h(h_info, self.indices, '95% < ', '% .6e',
+                    self.mean+self.bounds[:, -1, 1])
 
     def write_v_info(self):
         """Write vertical info file"""
@@ -2279,7 +2378,7 @@ class Information(object):
             v_info.write(' '.join(['%-11s' % elem for elem in [
                 'Best fit', 'mean', 'sigma', '1-sigma -', '1-sigma +',
                 '2-sigma -', '2-sigma +', '1-sigma >', '1-sigma <',
-                '2-sigma >', '2-sigma <']]))
+                '2-sigma >', '2-sigma <', '95% CL >', '95% CL <']]))
             for index, name in zip(self.indices, self.info_names):
                 v_info.write('\n%-15s\t: % .4e' % (name, self.R[index]))
                 v_info.write(' '.join(['% .4e' % elem for elem in [
@@ -2290,7 +2389,9 @@ class Information(object):
                     self.mean[index]+self.bounds[index, 0, 0],
                     self.mean[index]+self.bounds[index, 0, 1],
                     self.mean[index]+self.bounds[index, 1, 0],
-                    self.mean[index]+self.bounds[index, 1, 1]]]))
+                    self.mean[index]+self.bounds[index, 1, 1],
+                    self.mean[index]+self.bounds[index, -1, 0],
+                    self.mean[index]+self.bounds[index, -1, 1]]]))
 
     def write_tex(self):
         """Write a tex table containing the main results """
@@ -2304,8 +2405,8 @@ class Information(object):
                     self.bestfit[index], self.mean[index],
                     self.bounds[index, 0, 0], self.bounds[index, 0, 1]))
                 tex.write("& $%.4g$ & $%.4g$ \\\\ \n" % (
-                    self.mean[index]+self.bounds[index, 1, 0],
-                    self.mean[index]+self.bounds[index, 1, 1]))
+                    self.mean[index]+self.bounds[index, -1, 0],
+                    self.mean[index]+self.bounds[index, -1, 1]))
 
             tex.write("\\hline \n \\end{tabular} \\\\ \n")
             tex.write("$-\ln{\cal L}_\mathrm{min} =%.6g$, " % (

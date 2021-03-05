@@ -10,15 +10,16 @@ import pandas as pd
 import scipy.linalg as la
 import montepython.io_mp as io_mp
 import os
+import functools
 from montepython.likelihood_class import Likelihood_sn
 
 T_CMB = 2.7255     #CMB temperature
 h = 6.62606957e-34     #Planck's constant
 kB = 1.3806488e-23     #Boltzmann constant
 Ghz_Kelvin = h/kB*1e9  #GHz Kelvin conversion
-    
+
 class BK14(Likelihood_sn):
-    
+
     def __init__(self, path, data, command_line):
         # Unusual construction, since the data files are not distributed
         # alongside BK14 (size problems)
@@ -32,7 +33,7 @@ class BK14(Likelihood_sn):
                 "http://bicepkeck.org/BK14_datarelease/BK14_cosmomc.tgz"
                 ", extract it, and copy the BK14 folder inside"
                 "`BK14_cosmomc/data/` to `your_montepython/data/`")
-        
+
         # Require tensor modes from CLASS as well as nonlinear lensing.
         # Nonlinearities enhance the B-mode power spectrum by more than 6%
         # at l>100. (Even more at l>2000, but not relevant to BICEP.)
@@ -52,9 +53,9 @@ class BK14(Likelihood_sn):
         map_fields = self.map_fields.split()
         map_names = self.map_names.split()
         self.map_fields_used = [maptype for i, maptype in enumerate(map_fields) if map_names[i] in map_names_used]
-        
+
         nmaps = len(map_names_used)
-        ncrossmaps = nmaps*(nmaps+1)/2
+        ncrossmaps = nmaps*(nmaps+1)//2
         nbins = int(self.nbins)
 
         ## This constructs a different flattening of triangular matrices.
@@ -62,23 +63,23 @@ class BK14(Likelihood_sn):
         ## w = [m for n in range(nmaps) for m in range(nmaps-n)]
         ## # Store the indices in a tuple of integer arrays for later use.
         ## self.flat_to_diag = (np.array(v),np.array(w))
-        
+
         # We choose the tril_indices layout for flat indexing of the triangular matrix
         self.flat_to_diag = np.tril_indices(nmaps)
         self.diag_to_flat = np.zeros((nmaps,nmaps),dtype='int')
         # It is now easy to generate an array with the corresponding flattened indices. (We only fill the lower triangular part.)
         self.diag_to_flat[self.flat_to_diag] = list(range(ncrossmaps))
-        
+
         # Read in bandpasses
         self.ReadBandpasses()
-        
+
         # Read window bins
         self.window_data = np.zeros((int(self.nbins),int(self.cl_lmax),ncrossmaps))
         # Retrieve mask and index permutation of windows:
         indices, mask = self.GetIndicesAndMask(self.bin_window_in_order.split())
         for k in range(nbins):
             windowfile = os.path.join(self.data_directory, self.bin_window_files.replace('%u',str(k+1)))
-            tmp = pd.read_table(windowfile,comment='#',sep=' ',header=None, index_col=0).as_matrix()
+            tmp = pd.read_table(windowfile,comment='#',sep=' ',header=None, index_col=0).to_numpy()
             # Apply mask
             tmp = tmp[:,mask]
             # Permute columns and store this bin
@@ -95,8 +96,8 @@ class BK14(Likelihood_sn):
             superindices += [idx+k*ncrossmaps for idx in indices]
             supermask += list(mask)
         supermask = np.array(supermask)
-        
-        tmp = pd.read_table(os.path.join(self.data_directory, self.covmat_fiducial),comment='#',sep=' ',header=None,skipinitialspace=True).as_matrix()
+
+        tmp = pd.read_table(os.path.join(self.data_directory, self.covmat_fiducial),comment='#',sep=' ',header=None,skipinitialspace=True).to_numpy()
         # Apply mask:
         tmp = tmp[:,supermask][supermask,:]
         print('Covmat read with shape',tmp.shape)
@@ -128,8 +129,8 @@ class BK14(Likelihood_sn):
         # Now take matrix square root:
         for k in range(nbins):
             self.cl_fiducial_sqrt_matrix[k] = la.sqrtm(self.cl_fiducial_sqrt_matrix[k])
-        
-        
+
+
     def ReadMatrix(self, filename, crossmaps):
         """
         Read matrices for each ell-bin for all maps inside crossmaps and
@@ -141,14 +142,14 @@ class BK14(Likelihood_sn):
         # Get mask and indices
         indices, mask = self.GetIndicesAndMask(crossmaps.split())
         # Read matrix in packed format
-        A = pd.read_table(os.path.join(self.data_directory, filename),comment='#',sep=' ',header=None, index_col=0).as_matrix()
+        A = pd.read_table(os.path.join(self.data_directory, filename),comment='#',sep=' ',header=None, index_col=0).to_numpy()
         # Apply mask
         A = A[:,mask]
 
         # Create matrix for each bin and unpack A:
         Mlist = []
         # Loop over bins:
-        for k in range(int(self.nbins)): 
+        for k in range(int(self.nbins)):
             M = np.zeros((nmaps,nmaps))
             Mflat = np.zeros(((nmaps*(nmaps+1))//2))
             Mflat[indices] = A[k,:]
@@ -167,7 +168,7 @@ class BK14(Likelihood_sn):
         usedmaps = self.map_names_used.split()
         nmaps = len(usedmaps)
         mask = np.array([False for i in range(len(crossmaplist))])
-        
+
         flatindex = []
         for i, crossmap in enumerate(crossmaplist):
             map1, map2 = crossmap.split('x')
@@ -186,7 +187,7 @@ class BK14(Likelihood_sn):
                     flatindex.append((index2*(index2+1))//2+index1)
                 mask[i] = True
         return flatindex, mask
-            
+
     def ReadBandpasses(self):
         """
         Read bandpasses and compute some thermodynamic quantities.
@@ -199,14 +200,14 @@ class BK14(Likelihood_sn):
         map_names_used = self.map_names_used.split()
         for key in map_names_used:
             self.bandpasses[key] = {'field':map_fields[map_names.index(key)],'filename':getattr(self, 'bandpass['+key+']')}
-        
+
         for key, valdict in io_mp.dictitems(self.bandpasses):
             tmp = np.loadtxt(os.path.join(self.data_directory, valdict['filename']))
             #Frequency nu, response resp:
             valdict['nu'] = tmp[:,0]
             valdict['resp'] = tmp[:,1]
             valdict['dnu'] = np.gradient(valdict['nu'])
-            
+
             # Calculate thermodynamic temperature conversion between this bandpass
             # and pivot frequencies 353 GHz (used for dust) and 23 GHz (used for
             # sync).
@@ -218,7 +219,7 @@ class BK14(Likelihood_sn):
             th0 = nu0**4*np.exp(Ghz_Kelvin*nu0/T_CMB) / (np.exp(Ghz_Kelvin*nu0/T_CMB) - 1.)**2
             valdict['th023'] = th_int / th0
             #print('th353:', valdict['th353'], 'th023:', valdict['th023'])
-    
+
 
     def loglkl(self, cosmo, data):
         """
@@ -232,14 +233,14 @@ class BK14(Likelihood_sn):
             D = np.abs(D)
             S = np.sqrt(D)
             # Now form B = C^{-1/2} Chat C^{-1/2}. I am using broadcasting to divide rows and columns
-            # by the eigenvalues, not sure if it is faster to form the matmul(S.T, S) matrix. 
+            # by the eigenvalues, not sure if it is faster to form the matmul(S.T, S) matrix.
             # B = U S^{-1} V^T Chat U S^{-1} U^T
             B = np.dot(np.dot(U,np.dot(np.dot(U.T,Chat),U)/S[:,None]/S[None,:]),U.T)
             # Now evaluate the matrix function g[B]:
             D, U = la.eigh(B)
             gD = np.sign(D-1.)*np.sqrt(2.*np.maximum(0.,D-np.log(D)-1.))
             # Final transformation. U*gD = U*gD[None,:] done by broadcasting. Collect chain matrix multiplication using reduce.
-            M = reduce(np.dot, [CfHalf,U*gD[None,:],U.T,CfHalf.T])
+            M = functools.reduce(np.dot, [CfHalf,U*gD[None,:],U.T,CfHalf.T])
             #M = np.dot(np.dot(np.dot(CfHalf,U*gD[None,:]),U.T),Cfhalf.T)
             return M
 
@@ -257,7 +258,7 @@ class BK14(Likelihood_sn):
         map_names = self.map_names_used.split()
         map_fields = self.map_fields_used
         nmaps = len(map_names)
-        ncrossmaps = nmaps*(nmaps+1)/2
+        ncrossmaps = nmaps*(nmaps+1)//2
         nbins = int(self.nbins)
         # Initialise Cls matrix to zero:
         Cls = np.zeros((nbins,nmaps,nmaps))
@@ -323,11 +324,11 @@ class BK14(Likelihood_sn):
             pl0 = nu0**(2+beta)
             # Calculate and return dust scaling fsync.
             return ((pl_int / pl0) / bandpass['th023'])
-    
-        
+
+
         ellpivot = 80.
         ell = np.arange(1,int(self.cl_lmax)+1)
-        
+
         # Convenience variables: store the nuisance parameters in short named variables
         # for parname in self.use_nuisance:
         #     evalstring = parname+" = data.mcmc_parameters['"+parname+"']['current']*data.mcmc_parameters['"+parname+"']['scale']"
@@ -359,4 +360,3 @@ class BK14(Likelihood_sn):
         self.dustcoeff = BBdust*(ell/ellpivot)**BBalphadust
         self.synccoeff = BBsync*(ell/ellpivot)**BBalphasync
         self.dustsynccoeff = BBdustsynccorr*np.sqrt(BBdust*BBsync)*(ell/ellpivot)**(0.5*(BBalphadust+BBalphasync))
-        
