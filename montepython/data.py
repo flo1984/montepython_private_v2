@@ -827,6 +827,9 @@ class Data(object):
                 self.cosmo_arguments['A_s'] = math.exp(
                     self.cosmo_arguments[elem]) / 1.e10
                 del self.cosmo_arguments[elem]
+            elif elem == 'log10a':
+                self.cosmo_arguments['a_idm_NEDE'] = 10**self.cosmo_arguments[elem]
+                del self.cosmo_arguments[elem]                                                              
             elif elem == 'exp_m_2_tau_As':
                 tau_reio = self.cosmo_arguments['tau_reio']
                 self.cosmo_arguments['A_s'] = self.cosmo_arguments[elem] * \
