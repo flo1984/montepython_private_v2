@@ -21,6 +21,7 @@ class S8(Likelihood):
         chi2 = 0.
 
         theo = cosmo.sigma8()*(cosmo.Omega0_m()/0.3)**0.5
+        print(theo)
 
         chi2 += ((theo - self.S8) / self.error) ** 2
 
