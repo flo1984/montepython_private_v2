@@ -155,8 +155,8 @@ data.cosmo_arguments['NEDE_fld_nature'] = 'BIII'
 data.cosmo_arguments['NEDE_dist_path'] = data.path['cosmo']+ '/thermal_dist/Dist.dat'
 
 #makes sure that all modes start before the transition of EDE, i.e. before z=30k.
-data.cosmo_arguments['start_large_k_at_tau_h_over_tau_k'] = 0.000001
-data.cosmo_arguments['start_small_k_at_tau_c_over_tau_h'] = 0.000001
+data.cosmo_arguments['start_large_k_at_tau_h_over_tau_k'] = 0.0000001
+data.cosmo_arguments['start_small_k_at_tau_c_over_tau_h'] = 0.0000001
 
 
 #------ Mcmc parameters ----
