@@ -39,7 +39,7 @@ data.parameters['h']            = [.715,   None, None,   .006,    1, 'cosmo']
 data.parameters['ln10^{10}A_s'] = [ 3.077,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
-data.parameters['r']    = [0.1, None, None,  0.03,    1, 'cosmo']
+data.parameters['r']    = [0.1, 0, None,  0.03,    1, 'cosmo']
 
 
 
