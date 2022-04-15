@@ -1,5 +1,5 @@
 #------Experiments to test (separated with commas)-----
-data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planck_lensing','bao_fs_boss_dr12','bao_smallz_2014','H0_local','Pantheon','BK15']
+data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planck_lensing','bao_fs_boss_dr12','bao_smallz_2014','H0_local','Pantheon','BK15','BK15priors']
 
 
 #------ Settings for the over-sampling.
@@ -18,7 +18,7 @@ data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planc
 # the three Planck likelihoods used, only Planck_highl requires nuisance
 # parameters, therefore over_sampling has a length of two (cosmology, plus one
 # set of nuisance).
-data.over_sampling=[1, 5,2]
+data.over_sampling=[1, 5,2,20]
 
 #------ Parameter list -------
 
@@ -100,6 +100,38 @@ data.parameters['A_pol']             = [       1,     1,     1,          0,     
 
 
 data.parameters['M']          = [-19.1,   None, None,  0.004,  1,'nuisance']
+
+# List of nuisance params of BK15, with a description
+# dust power at ell=80, nu=353 GHz [uK^2]
+data.parameters['BBdust']         = [   3.,   0.,  15.,  0.1, 1, 'nuisance']
+# sync power at ell=80, nu=23 GHz [uK^2]
+data.parameters['BBsync']         = [   1.,   0.,  50.,   1., 1, 'nuisance']
+# dust spatial power spectrum power law index
+data.parameters['BBalphadust']    = [-0.42, -1.0,   0., 0.01, 1, 'nuisance']
+# dust SED power law index
+data.parameters['BBbetadust']     = [ 1.59, 1.04, 2.14, 0.02, 1, 'nuisance']
+# sync spatial power specturm power law index
+data.parameters['BBalphasync']    = [ -0.6, -1.0,   0., 0.01, 1, 'nuisance']
+# sync SED power law index
+data.parameters['BBbetasync']     = [ -3.1, -4.5, -2.0, 0.02, 1, 'nuisance']
+# correlation between dust and sync
+data.parameters['BBdustsynccorr'] = [  0.2, -1.0,  1.0, 0.01, 1, 'nuisance']
+# dust blackbody temperature [K] -- fixed / very insensitive to this
+data.parameters['BBTdust']        = [ 19.6, 19.6, 19.6,  0.0, 1, 'nuisance']
+# dust dust correlation ratio between 217 and 353 GHz, ell=80 --new
+data.parameters['Delta_dust']     = [  1.0,  1.0,  1.0,  0.0, 1, 'nuisance']
+# sync correlation ratio between 23 and 33 GHz, ell=80 --new
+data.parameters['Delta_sync']     = [  1.0,  1.0,  1.0,  0.0, 1, 'nuisance']
+# Band center errors, fixed to zero --new in BK15
+data.parameters['gamma_corr']     = [  0.0,  0.0,  0.0,  0.0, 1, 'nuisance']
+data.parameters['gamma_95']       = [  0.0,  0.0,  0.0,  0.0, 1, 'nuisance']
+data.parameters['gamma_150']      = [  0.0,  0.0,  0.0,  0.0, 1, 'nuisance']
+data.parameters['gamma_220']      = [  0.0,  0.0,  0.0,  0.0, 1, 'nuisance']
+# EE/BB ratios -- fixed / only used if E-modes are turned on
+data.parameters['EEtoBB_dust']    = [  2.0,  2.0,  2.0,    0, 1, 'nuisance']
+data.parameters['EEtoBB_sync']    = [  2.0,  2.0,  2.0,    0, 1, 'nuisance']
+
+
 
 # Derived parameters
 
