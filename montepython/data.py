@@ -811,7 +811,27 @@ class Data(object):
                     omega_nu = 0.
                 self.cosmo_arguments['omega_cdm'] = omega_m - omega_b - omega_nu
                 del self.cosmo_arguments[elem]
-                      
+
+
+            elif elem == 'f1':
+
+                f1 = self.cosmo_arguments[elem]
+                try:
+                    f2 = self.cosmo_arguments['f2']
+                    del self.cosmo_arguments['f2']
+                except:
+                    f2 = 0.0
+                
+                f_NEDE = f1+f2
+                alpha_NEDE = f2/f_NEDE
+
+                self.cosmo_arguments['f_NEDE'] = f_NEDE
+                self.cosmo_arguments['alpha_NEDE'] = alpha_NEDE
+
+                del self.cosmo_arguments[elem]
+                
+
+                
             elif elem == 'frac_EDE':
                 
                 frac_EDE = self.cosmo_arguments[elem]
