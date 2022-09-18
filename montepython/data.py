@@ -882,13 +882,13 @@ class Data(object):
                 self.cosmo_arguments['EDE2_clock_mass'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
 
-            elif elem == 'log10z':
-                self.cosmo_arguments['z_decay_NEDE'] = 10**self.cosmo_arguments[elem]
-                del self.cosmo_arguments[elem]
+            #elif elem == 'log10z':
+             #   self.cosmo_arguments['z_decay_NEDE'] = 10**self.cosmo_arguments[elem]
+              #  del self.cosmo_arguments[elem]
 
             elif elem == 'f_sq_log10z':
-                f_NEDE = self.cosmo_arguments['f_NEDE']
-                self.cosmo_arguments['z_decay_NEDE'] = 10**(self.cosmo_arguments[elem]*0.1**2/f_NEDE**2)
+                f_NEDE_tmp = self.cosmo_arguments['f_NEDE']
+                self.cosmo_arguments['z_decay_NEDE'] = 10**(self.cosmo_arguments[elem]*0.1**2/f_NEDE_tmp**2)
                 del self.cosmo_arguments[elem]
 
 
