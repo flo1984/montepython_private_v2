@@ -867,9 +867,7 @@ class Data(object):
                         trigger = self.cosmo_arguments['Bubble_trigger_H_over_m']
                     except:
                         trigger = 1.
-
                 self.cosmo_arguments['Omega_EDE2'] = frac_EDE * mphi**2 / (h * 10**5 / (2.99792458*10**8) )**2 * trigger**2
-
                 del self.cosmo_arguments[elem]
 
 
@@ -882,9 +880,9 @@ class Data(object):
                 self.cosmo_arguments['EDE2_clock_mass'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
 
-            #elif elem == 'log10z':
-             #   self.cosmo_arguments['z_decay_NEDE'] = 10**self.cosmo_arguments[elem]
-              #  del self.cosmo_arguments[elem]
+            elif elem == 'log10z':
+                self.cosmo_arguments['z_decay_NEDE'] = 10**self.cosmo_arguments[elem]
+                del self.cosmo_arguments[elem]
 
             elif elem == 'f_sq_log10z':
                 f_NEDE_tmp = self.cosmo_arguments['f_NEDE']
