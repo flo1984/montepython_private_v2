@@ -40,7 +40,7 @@ data.parameters['ln10^{10}A_s'] = [ 3.077,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
 data.parameters['f_NEDE']    = [0.14,   0.0000001, 0.3,  0.014,    1, 'cosmo']
-data.parameters['f_sq_log10z']    = [3.3,   1.8, 4.2,  0.08,    1, 'cosmo']
+data.parameters['fsqlog10z']    = [3.3,   1.8, 4.2,  0.08,    1, 'cosmo']
 data.parameters['Omega_k']    = [0.0,   -0.5, 0.5,  0.005,    1, 'cosmo']
 
 

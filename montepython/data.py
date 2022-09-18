@@ -884,7 +884,7 @@ class Data(object):
                 self.cosmo_arguments['z_decay_NEDE'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
 
-            elif elem == 'f_sq_log10z':
+            elif elem == 'fsqlog10z':
                 f_NEDE_tmp = self.cosmo_arguments['f_NEDE']
                 self.cosmo_arguments['z_decay_NEDE'] = 10**(self.cosmo_arguments[elem]*0.1**2/f_NEDE_tmp**2)
                 del self.cosmo_arguments[elem]
