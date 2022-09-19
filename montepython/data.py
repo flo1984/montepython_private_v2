@@ -888,7 +888,11 @@ class Data(object):
                 f_NEDE_tmp = self.cosmo_arguments['f_NEDE']
                 self.cosmo_arguments['z_decay_NEDE'] = 10**(self.cosmo_arguments[elem])*(0.1/f_NEDE_tmp)
                 del self.cosmo_arguments[elem]
-
+            
+            elif elem == 'log10zoverf':
+                f_NEDE_tmp = self.cosmo_arguments['f_NEDE']
+                self.cosmo_arguments['z_decay_NEDE'] = 10**(self.cosmo_arguments[elem])*(f_NEDE_tmp/0.1)
+                del self.cosmo_arguments[elem]
 
             elif elem == 'log10z_rel':
                 self.cosmo_arguments['mass_over_q0_NEDE'] = 10**self.cosmo_arguments[elem]
