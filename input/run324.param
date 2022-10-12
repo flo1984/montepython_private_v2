@@ -148,7 +148,7 @@ data.cosmo_arguments['three_eos_EDE'] = 2.0
 data.cosmo_arguments['three_ceff2_EDE'] = 2.0
 data.cosmo_arguments['Omega_Lambda'] = 0.0
 data.cosmo_arguments['Omega_scf'] = 0.0
-data.cosmo_arguments['log10z'] = 3.69897
+data.cosmo_arguments['z_decay_NEDE'] = 5000
 
 #makes sure that all modes start before the transition of EDE, i.e. before z=30k.
 data.cosmo_arguments['start_large_k_at_tau_h_over_tau_k'] = 0.000001
