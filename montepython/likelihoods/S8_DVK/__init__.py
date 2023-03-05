@@ -33,7 +33,8 @@ class S8_DVK(Likelihood):
 
 
         theo = sigma8*(cosmo.Omega_m()/0.3)**0.5
-        
+        print(theo)
+
         if theo-self.S8 > 0 :
             chi2 += ((theo - self.S8) / self.errorplus) ** 2
         else:
