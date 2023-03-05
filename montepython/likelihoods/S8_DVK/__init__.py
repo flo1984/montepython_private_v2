@@ -11,7 +11,10 @@ class S8_DVK(Likelihood):
 
         Likelihood.__init__(self, path, data, command_line)
 
+        self.need_cosmo_arguments(data, {'output': 'mPk'})
 
+        if 'sigma8' not in data.get_mcmc_parameters(['derived']):
+            raise io_mp.ConfigurationError('Error: S8 likelihood needs sigma8 as derived parameter')
         # end of initialization
 
     # compute likelihood
@@ -20,7 +23,16 @@ class S8_DVK(Likelihood):
 
         chi2 = 0.
 
-        theo = cosmo.nl.sigma8[cosmo.nl.index_pk_m]*(cosmo.ba.Omega0_m/0.3)**0.5
+        derived = cosmo.get_current_derived_parameters(data.get_mcmc_parameters(['derived']))
+        for (name, value) in derived.items():
+            data.mcmc_parameters[name]['current'] = value
+        for name in derived:
+            data.mcmc_parameters[name]['current'] /= data.mcmc_parameters[name]['scale']
+
+        sigma8=data.mcmc_parameters['sigma8']['current']
+
+
+        theo = sigma8*(cosmo.ba.Omega0_m/0.3)**0.5
         
         if theo-self.S8 > 0 :
             chi2 += ((theo - self.S8) / self.errorplus) ** 2
