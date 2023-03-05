@@ -1,0 +1,5 @@
+# S8 data
+S8_DVK.S8 = 0.755
+S8_DVK.errorplus = 0.019
+S8_DVK.errorminus = 0.021
+	
