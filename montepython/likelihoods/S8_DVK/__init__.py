@@ -32,7 +32,7 @@ class S8_DVK(Likelihood):
         sigma8=data.mcmc_parameters['sigma8']['current']
 
 
-        theo = sigma8*(cosmo.ba.Omega0_m/0.3)**0.5
+        theo = sigma8*(cosmo.Omega_m()/0.3)**0.5
         
         if theo-self.S8 > 0 :
             chi2 += ((theo - self.S8) / self.errorplus) ** 2
