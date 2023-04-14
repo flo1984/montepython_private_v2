@@ -141,8 +141,8 @@ data.cosmo_arguments['sub_dom_cond'] = 1.e-6
 data.cosmo_arguments['decay_res_enhancement'] = 100
 data.cosmo_arguments['three_cvis2_NEDE'] = 0
 data.cosmo_arguments['NEDE_ceff_nature']='tracking'
-data.cosmo_arguments['trigger_resolution'] = 0.05
-data.cosmo_arguments['NEDE_trigger_fluid_H_m'] = 0.01
+#data.cosmo_arguments['trigger_resolution'] = 0.05
+#data.cosmo_arguments['NEDE_trigger_fluid_H_m'] = 0.01
 
 data.cosmo_arguments['background_verbose'] = 4
 data.cosmo_arguments['perturbations_verbose'] = 2
