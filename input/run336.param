@@ -78,11 +78,15 @@ data.cosmo_arguments['Junction_tag']   =  1
 data.cosmo_arguments['sub_dom_cond']   =  0.000001 
 data.cosmo_arguments['start_small_k_at_tau_c_over_tau_h']   =  0.000001 
 data.cosmo_arguments['start_large_k_at_tau_h_over_tau_k']   = 0.000001 
-data.cosmo_arguments['sBBN file'] = data.path['cosmo']+'/external/bbn/sBBN.dat'
-data.cosmo_arguments['output'] = 'mPk'
-data.cosmo_arguments['P_k_max_h/Mpc'] = 10.
+
+
+data.cosmo_arguments['sBBN file'] = data.path['cosmo']+'/bbn/sBBN_2017.dat'
 data.cosmo_arguments['k_pivot'] = 0.05
-data.cosmo_arguments['non linear'] = 'halofit'
+
+data.cosmo_arguments['output'] = 'mPk'
+data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
+
+#data.cosmo_arguments['non linear'] = 'halofit'
 
 data.over_sampling = [1, 5, 3]
 data.N = 10
