@@ -121,7 +121,11 @@ data.parameters['lya_neff']         = [0, None, None, 0,     1,   'derived_lkl']
 
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
 
-data.cosmo_arguments['sBBN file'] = data.path['cosmo']+'/bbn/sBBN.dat'
+data.cosmo_arguments['sBBN file'] = data.path['cosmo']+'/external/bbn/sBBN.dat'
+# BBN file path is automatically set to match CLASS version if 'sBBN file' is requested
+# You can force the code to use the exact BBN file passed above with flag
+#data.custom_bbn_file = True
+
 data.cosmo_arguments['k_pivot'] = 0.05
 data.cosmo_arguments['N_ur'] = 3.046
 

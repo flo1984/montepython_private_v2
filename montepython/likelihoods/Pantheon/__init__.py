@@ -100,7 +100,8 @@ class Pantheon(Likelihood_sn):
         moduli = np.empty((size, ))
         for index, row in self.light_curve_params.iterrows():
             z_cmb = row['zcmb']
-            moduli[index] = cosmo.luminosity_distance(z_cmb)
+            z_hel = row['zhel']
+            moduli[index] = (1.+z_hel)/(1.+z_cmb) * cosmo.luminosity_distance(z_cmb)
         moduli = 5 * np.log10(moduli) + 25
 
         # Convenience variables: store the nuisance parameters in short named

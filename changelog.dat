@@ -1,5 +1,18 @@
-v3.4.0
-	+ Added BBN likelihoods from 1907.11594 (N. Schoeneberg, D. C. Hooper)
+v3.6.0  + Added Lyman-alpha alpha-beta-gamma-delta likelihood from 2206.08188 (D. C. Hooper, N. Schoeneberg, R. Murgia)
+        + Added eBOSS DR16 BAO-only likelihoods (S. Alvi, T. Brinckmann)
+        + Added eBOSS DR16 BAO-plus likelihoods (V. Poulin, T. Brinckmann)
+        + Added Pantheon+ and Pantheon+SH0ES likelihoods (V. Poulin)
+        + Added KiDS-1000 likelihoods (B. Stoelzner)
+        + Added S_8 as sampling parameter (B. Stoelzner, T. Brinckmann)
+        + Various bugfixes and pull requests
+---------------------------------------------------------------------
+v3.5.0  + Added framework for spectral distortions likelihoods, plus mock FIRAS and PIXIE (D. C. Hooper, M. Lucca, N. Schoeneberg)
+	+ Added new Pantheon likelihood with prior on the absolute magnitude (D. Camarena)
+	+ Updated Pantheon likelihood to latest value
+	+ Various bugfixes related to python2 / python3 compatibility (D. C. Hooper, N. Schoeneberg)
+	+ Various additional bugfixes
+---------------------------------------------------------------------
+v3.4.0  + Added BBN likelihoods from 1907.11594 (N. Schoeneberg, D. C. Hooper)
 	+ Added H0LICOW likelihoods from 1907.04869 (S. Taubenberger, S. Suyu)
 	+ New feature: experiment specifications passed in .param files now overwrite ones in .data files, which allows for testing different likelihood specifications simultaneously (N. Schoeneberg)
 	+ New plotting features: to_derive allows to add new parameters in the plot file without overwriting the old parameter, and to_reorder allows to choose the order of parameters for the plots (N. Schoeneberg)

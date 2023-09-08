@@ -53,7 +53,7 @@ class Prior(object):
 
         # Store boundaries for convenient access later
         # Put all fields that are -1 to None to avoid confusion later on.
-        self.prior_range = [a if not((a is -1) or (a is None)) else None
+        self.prior_range = [a if not((a == -1) or (a == None)) else None
                             for a in deepcopy(array[1:3])]
 
     def draw_from_prior(self):
@@ -76,10 +76,10 @@ class Prior(object):
             while not within_bounds:
                 value = rd.gauss(self.mu, self.sigma)
                 # Check for boundaries problem
-                within_bounds = calue_within_prior_range(value)
+                within_bounds = value_within_prior_range(value)
 
             return value
-                
+
     def value_within_prior_range(self, value):
         """
         Check for a value being in or outside the prior range
@@ -112,5 +112,5 @@ class Prior(object):
         which should have been previously checked with :func:`is_bound`
 
         """
-        return (self.prior_range[0] + 
+        return (self.prior_range[0] +
                 value * (self.prior_range[1] - self.prior_range[0]))

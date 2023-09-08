@@ -6,6 +6,10 @@
 # updated for the Pantheon sample
 
 Pantheon.data_directory = os.path.join(data.path['data'], 'Pantheon')
+# Note the data file in pantheon.dataset file was changed from
+# from data_file = data/lcparam_full_long.txt
+# to data_file = data/lcparam_full_long_zhel.txt
+# in order to match Planck 1807.05209, see footnote 19, page 24
 Pantheon.settings       = 'pantheon.dataset'
 Pantheon.conflicting_experiments = ['JLA_simple', 'JLA']
 

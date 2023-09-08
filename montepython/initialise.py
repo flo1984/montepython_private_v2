@@ -161,10 +161,17 @@ def recover_cosmological_module(data):
             classy_path = ''
             for elem in os.listdir(os.path.join(
                     data.path['cosmo'], "python", "build")):
-                if elem.find("lib.") != -1:
+                if elem.find("lib.") != -1 and elem.find(sys.version)!=-1:
                     classy_path = os.path.join(
                         data.path['cosmo'], "python", "build", elem)
-                    break
+                if len(classy_path)==1:
+                    classy_path = classy_path[0]
+                else:
+                    stringcheck = "%i.%i"%(sys.version_info.major,sys.version_info.minor)
+                    for path in classy_path:
+                        if stringcheck in path:
+                            classy_path = path
+                            break
         except OSError:
             raise io_mp.ConfigurationError(
                 "You probably did not compile the python wrapper of CLASS. " +

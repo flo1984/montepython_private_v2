@@ -244,34 +244,35 @@ class Likelihood(object):
             Desired precision for some cosmological parameters
 
         """
-        array_flag = False
         for key, value in dictitems(dictionary):
+            array_flag = False
+            num_flag = True
             try:
                 data.cosmo_arguments[key]
                 try:
                     float(data.cosmo_arguments[key])
-                    num_flag = True
                 except ValueError:
                     num_flag = False
+                    # ML+NS+DCH --> Fixed the adding of new string parameters generating spurious copies and/or concatenating without spaces
+                    splitstring = [item for string in value.split(" ") for item in string.split(",")]
+                    for addvalue in splitstring:
+                        if data.cosmo_arguments[key].find(addvalue)==-1:
+                            data.cosmo_arguments[key] += ' '+addvalue+''
                 except TypeError:
-                    num_flag = True
                     array_flag = True
 
             except KeyError:
                 try:
                     float(value)
-                    num_flag = True
                     data.cosmo_arguments[key] = 0
                 except ValueError:
                     num_flag = False
-                    data.cosmo_arguments[key] = ''
+                    data.cosmo_arguments[key] = ''+value+''
+                    #print(data.cosmo_arguments[key])
                 except TypeError:
-                    num_flag = True
                     array_flag = True
-            if num_flag is False:
-                if data.cosmo_arguments[key].find(value) == -1:
-                    data.cosmo_arguments[key] += ' '+value+' '
-            else:
+
+            if num_flag is True:
                 if array_flag is False:
                     if float(data.cosmo_arguments[key]) < value:
                         data.cosmo_arguments[key] = value
@@ -1304,6 +1305,7 @@ class Likelihood_mock_cmb(Likelihood):
         # default:
         if not self.ExcludeTTTEEE:
             numCls = 3
+
         # default 0 if excluding TT EE
         else:
             numCls = 0
@@ -1448,8 +1450,8 @@ class Likelihood_mock_cmb(Likelihood):
             # (this case is usually not useful/relevant)
             if self.Bmodes and (not self.delensing):
                     cl_lensed = self.get_cl(cosmo)
-                    for l in range(self.lmax+1):
-                        cl[l]['bb']=cl_lensed[l]['bb']
+                    for l in range(self.l_min,self.l_max+1):
+                        cl['bb'][l]=cl_lensed['bb'][l]
 
         # if we want lensed Cl's
         else:
@@ -1457,8 +1459,8 @@ class Likelihood_mock_cmb(Likelihood):
             # exception: for delensed B modes we need the unlensed spectrum
             if self.Bmodes and self.delensing:
                 cl_unlensed = self.get_unlensed_cl(cosmo)
-                for l in range(self.lmax+1):
-                        cl[l]['bb']=cl_unlensed[l]['bb']
+                for l in range(self.l_min,self.l_max+1):
+                        cl['bb'][l]=cl_unlensed['bb'][l]
 
         # get likelihood
         lkl = self.compute_lkl(cl, cosmo, data)
@@ -1579,17 +1581,25 @@ class Likelihood_mock_cmb(Likelihood):
                     cltd_fid = self.Cl_fid[self.index_tp, l]
                     cltd = math.sqrt(l*(l+1.))*cl['tp'][l]
 
-                Cov_obs = np.array([
-                    [self.Cl_fid[0, l], self.Cl_fid[2, l], 0.*self.Cl_fid[self.index_tp, l]],
-                    [self.Cl_fid[2, l], self.Cl_fid[1, l], 0],
-                    [cltd_fid, 0, cldd_fid]])
-                Cov_the = np.array([
-                    [cl['tt'][l]+self.noise_T[l], cl['te'][l], 0.*math.sqrt(l*(l+1.))*cl['tp'][l]],
-                    [cl['te'][l], cl['ee'][l]+self.noise_P[l], 0],
-                    [cltd, 0, cldd+self.Nldd[l]]])
+                if self.OnlyTT:
+                    Cov_obs = np.array([
+                        [self.Cl_fid[0, l], 0.*self.Cl_fid[self.index_tp, l]],
+                        [cltd_fid, cldd_fid]])
+                    Cov_the = np.array([
+                        [cl['tt'][l]+self.noise_T[l],  0.*math.sqrt(l*(l+1.))*cl['tp'][l]],
+                        [cltd,  cldd+self.Nldd[l]]])
+                else:
+                    Cov_obs = np.array([
+                        [self.Cl_fid[0, l], self.Cl_fid[2, l], 0.*self.Cl_fid[self.index_tp, l]],
+                        [self.Cl_fid[2, l], self.Cl_fid[1, l], 0],
+                        [cltd_fid, 0, cldd_fid]])
+                    Cov_the = np.array([
+                        [cl['tt'][l]+self.noise_T[l], cl['te'][l], 0.*math.sqrt(l*(l+1.))*cl['tp'][l]],
+                        [cl['te'][l], cl['ee'][l]+self.noise_P[l], 0],
+                        [cltd, 0, cldd+self.Nldd[l]]])
 
 	    # case with TT only (Added by Siavash Yasini)
-            elif self.OnlyTT:
+            elif self.OnlyTT and not self.LensingExtraction:
                 Cov_obs = np.array([[self.Cl_fid[0, l]]])
 
                 Cov_the = np.array([[cl['tt'][l]+self.noise_T[l]]])
@@ -1619,6 +1629,403 @@ class Likelihood_mock_cmb(Likelihood):
 
             chi2 += (2.*l+1.)*self.f_sky *\
                 (det_mix/det_the + math.log(det_the/det_obs) - num_modes)
+
+        return -chi2/2
+
+
+########################################
+# Spectral Distortions TYPE LIKELIHOOD
+# --> mock PIXIE, FIRAS, ...
+# Implemented by D.C. Hooper, M. Lucca
+# and N. Schoeneberg. Implementation
+# described in 1910.04619 (general) and
+# 2010.07814 (foregrounds)
+########################################
+class Likelihood_sd(Likelihood):
+
+    def __init__(self, path, data, command_line):
+
+        Likelihood.__init__(self, path, data, command_line)
+
+        # Tell CLASS that for sure we are going to need SDs
+        self.need_cosmo_arguments(
+            data, {'output': 'sd','modes':'s' })
+
+        ################
+        # Noise spectrum
+        ################
+
+        """The user can either pass an external noise file (as done for FIRAS), or compute it here automatically (as done for PIXIE)."""
+
+        """If no noise file is provided, we will need the following information from the .data file:
+           detector_nu_min, detector_nu_max, detector_nu_delta, detector_bin_number, detector_delta_Ic"""
+
+
+        try:
+            self.noise_from_file
+        except:
+            self.noise_from_file = False
+
+        # Read noise from file
+        if self.noise_from_file:
+            try:
+                self.noise_file_name
+                self.noise_file_directory
+            except:
+                raise io_mp.LikelihoodError("If you want to read the noise from a file (according to your 'noise_from_file' option passed to the SD likelihood, you need to also add a 'noise_file_name' and 'noise_file_directory'.")
+
+            # Warn the user if they are doing something wrong
+            if hasattr(self, 'detector_bin_number') or hasattr(self, 'detector_nu_delta') or hasattr(self, 'detector_nu_min') or hasattr(self, 'detector_nu_max'):
+                warnings.warn(' Warning! You asked to read the noise from a file, but you also passed detector spcifications.')
+                warnings.warn(' I will ignore the bin_number, nu_delta, nu_min, and nu_max you passed in the likelihood file, and calculate them from the noise file.')
+
+            # This is because CLASS only needs the name, but knows the directory, while here we need to link it properly
+            self.noise_file = os.path.join(self.noise_file_directory, self.noise_file_name)
+
+            if os.path.exists(self.noise_file):
+                with open(self.noise_file, 'r') as noise:
+                    nu_from_file = []
+                    noise_from_file = []
+
+                    # The first line contains information needed for CLASS, but not here. Skip header and first line
+                    line = noise.readline()
+                    while line.find('#') != -1:
+                        line = noise.readline()
+
+                    for line in noise:
+                        # Get frequency from detector settings
+                        nu_from_file.append(float(line.split()[0]))
+                        noise_from_file.append(float(line.split()[1]))
+
+                # Get number of bins, nu_min, and nu_max from file
+                self.detector_bin_number = len(nu_from_file)
+                self.detector_nu_min = nu_from_file[0]
+                self.detector_nu_max = nu_from_file[-1]
+
+                # Pass the two arrays for the rest of the likelihood
+                self.nu_range = np.array(nu_from_file, 'float64')
+                self.noise_Ic = np.array(noise_from_file, 'float64')
+
+            else:
+                raise io_mp.LikelihoodError("Could not find file "+str(self.noise_file))
+
+        # Compute noise for mission based on detector specifications
+        else:
+
+            # Compute noise (in Jy/ sr). For now, for a PIXIE_like detector we use the same noise in every bin,
+            # in the future we will add more options
+
+            if hasattr(self, 'detector_bin_number') and hasattr(self, 'detector_nu_delta'):
+               # If user passed both, check that they are consistent
+                bin_number = int(round((self.detector_nu_max-self.detector_nu_min)/float(self.detector_nu_delta)))
+                if (self.detector_bin_number != bin_number):
+                    raise io_mp.LikelihoodError("You requested %d bins, with a bin width of %d. From your min_nu, max_nu, and bin width I get %d bins Aborting." \
+                                                % (self.detector_bin_number, self.detector_nu_delta, bin_number ))
+
+            if not hasattr(self, 'detector_bin_number'):
+                self.detector_bin_number = int(round((self.detector_nu_max-self.detector_nu_min)/float(self.detector_nu_delta)))
+
+            print('Computing noise for %d bins', self.detector_bin_number)
+
+            self.noise_Ic = np.zeros(self.detector_bin_number, 'float64')
+            self.nu_range = np.zeros(self.detector_bin_number, 'float64')
+
+            for nu_i in range(self.detector_bin_number):
+                self.noise_Ic[nu_i] = self.detector_delta_Ic
+                self.nu_range[nu_i] = self.detector_nu_min + self.detector_nu_delta*nu_i
+
+        # Now we pass things to CLASS. CLASS will take either detctor name and noise file, or detector name and specifications
+        if self.noise_from_file:
+            self.need_cosmo_arguments(data, {'sd_detector_name':self.detector})
+            self.need_cosmo_arguments(data, {'sd_detector_file':self.noise_file_name})
+
+        else:
+            self.need_cosmo_arguments(data, {'sd_detector_name':self.detector})
+            self.need_cosmo_arguments(data, {'sd_detector_nu_min': self.detector_nu_min, 'sd_detector_nu_max': self.detector_nu_max})
+            self.need_cosmo_arguments(data, {'sd_detector_nu_delta': self.detector_nu_delta, 'sd_detector_delta_Ic': self.detector_delta_Ic})
+
+
+        # Deal with fiducial model
+        # If the file exists, initialize the fiducial values
+        self.Ic_fid = np.zeros(self.detector_bin_number, 'float64')
+        self.fid_values_exist = False
+        if os.path.exists(os.path.join(
+                self.data_directory, self.fiducial_file)):
+            self.fid_values_exist = True
+            fid_file = open(os.path.join(
+                self.data_directory, self.fiducial_file), 'r')
+            line = fid_file.readline()
+            while line.find('#') != -1:
+                line = fid_file.readline()
+            while (line.find('\n') != -1 and len(line) == 1):
+                line = fid_file.readline()
+            for nu_i in range(self.detector_bin_number):
+                self.Ic_fid[nu_i] = float(line.split()[1])
+                line = fid_file.readline()
+
+        # Else the file will be created in the loglkl() function
+
+        # Load foreground templates:
+        self.spinning_dust_file = "spectral_templates/SpinningDustTemplate.dat"
+        self.spinning_dust_lognup_data = np.log(31.)
+        self.spinning_dust_lognup_0 = np.log(30.)
+        self.spinning_dust_lognu_0 = np.log(22.8)
+        spinning_dust_lognu_data = []
+        spinning_dust_logT_brightness_data = []
+        with open(os.path.join(self.data_directory, self.spinning_dust_file), 'r') as sd_file:
+            line = sd_file.readline()
+            while line.find('#') != -1:
+                line = sd_file.readline()
+            while (line.find('\n') != -1 and len(line) == 1):
+                line = sd_file.readline()
+            while line:
+                nu = float(line.split(",")[0])
+                T_brightness = float(line.split(",")[1])
+                spinning_dust_lognu_data.append(np.log(nu))
+                spinning_dust_logT_brightness_data.append(np.log(T_brightness))
+                line = sd_file.readline()
+        spinning_dust_lognu_data = np.array(spinning_dust_lognu_data)
+        spinning_dust_logT_brightness_data = np.array(spinning_dust_logT_brightness_data)
+        self.spinning_dust_lognumin = spinning_dust_lognu_data[0]
+        self.spinning_dust_lognumax = spinning_dust_lognu_data[-1]
+        self.spinning_dust_logT_brightness = scipy.interpolate.CubicSpline(spinning_dust_lognu_data,spinning_dust_logT_brightness_data)
+
+        self.co_integrated_file = "spectral_templates/COintegratedTemplate.dat"
+        co_integrated_lognu_data = []
+        co_integrated_logInu_data = []
+        with open(os.path.join(self.data_directory, self.co_integrated_file), 'r') as co_file:
+            line = co_file.readline()
+            while line.find('#') != -1:
+                line = co_file.readline()
+            while (line.find('\n') != -1 and len(line) == 1):
+                line = co_file.readline()
+            while line:
+                nu = float(line.split(",")[0])
+                Inu = float(line.split(",")[1])
+                co_integrated_lognu_data.append(np.log(nu))
+                co_integrated_logInu_data.append(np.log(Inu))
+                line = co_file.readline()
+        co_integrated_lognu_data = np.array(co_integrated_lognu_data)
+        co_integrated_logInu_data = np.array(co_integrated_logInu_data)
+        self.co_integrated_lognu_min = co_integrated_lognu_data[0]
+        self.co_integrated_lognu_max = co_integrated_lognu_data[-1]
+        self.co_integrated_logInu = scipy.interpolate.CubicSpline(co_integrated_lognu_data,co_integrated_logInu_data)
+
+        # End of initialisation
+        return
+
+    def eval_spinning_dust(self, lognu,lognu_p):
+        # Define local quantities and range check them (outside of these values T_brightness < 0.0001*T_brightnes_max)
+        lognu_tilde = lognu+self.spinning_dust_lognup_data-lognu_p
+        lognu0_tilde = self.spinning_dust_lognu_0+self.spinning_dust_lognup_data-lognu_p
+
+        if(lognu_tilde < self.spinning_dust_lognumin or lognu0_tilde < self.spinning_dust_lognumin):
+          return 0.
+        if(lognu_tilde > self.spinning_dust_lognumax or lognu0_tilde > self.spinning_dust_lognumax):
+          return 0.
+
+        # Calculate T_brightness*nu^2 as a proxy for I (indeed, since we are using differences of logs, the final result IS the intensity)
+        log_T_brightness_times_nu2 = self.spinning_dust_logT_brightness(lognu_tilde) - self.spinning_dust_logT_brightness(lognu0_tilde) + 2 * (lognu_tilde-lognu0_tilde)
+
+        # What we calculated is directly the delta I(nu)/delta I(nu_ref)
+        return np.exp(log_T_brightness_times_nu2)
+
+    def eval_co_integrated(self, lognu):
+        if(lognu < self.co_integrated_lognu_min or lognu > self.co_integrated_lognu_max):
+          return 0.
+
+        # Calculate logI directly
+        logInu = self.co_integrated_logInu(lognu)
+
+        return np.exp(logInu)
+
+    def loglkl(self, cosmo, data):
+        # Get SDs from CLASS (returned in Jy/sr = 10^(-26)W/m^2/sr/Hz units)
+        sd = cosmo.spectral_distortion()
+
+        # Get likelihood
+        lkl = self.compute_lkl(sd, cosmo, data)
+
+        return lkl
+
+    def compute_lkl(self, sd, cosmo, data):
+        sd_nu = sd[0]   # In GHz
+        sd_amp = sd[1]  # In Jy/sr = 10^(-26)W/m^2/sr/Hz
+
+        # Define constants
+        const_h = 6.62607004e-34
+        const_k = 1.38064852e-23
+        const_c = 299792458
+
+        # Define useful quantities
+        nu = self.nu_range       # In GHz
+        T_cmb = cosmo.T_cmb()    # In Kelvin
+
+        # Define dimensionless frequency and overall normalization
+        x = (nu*1e9*const_h)/(T_cmb*const_k)
+        normalisation = 2 *(T_cmb*const_k)**3/(const_h*const_c)**2*1.e26 # In Jy/sr (About 270MJy)
+
+        # Define distortion shapes
+        alpha_mu = 0.45614425920673529                             # Should be precise enough... (1/3 * zeta(2)/zeta(3))
+        g_shape = normalisation*x**4*np.exp(-x)/(1.-np.exp(-x))**2 # In Jy/sr
+        mu_shape = g_shape*(alpha_mu-1./x)                         # In Jy/sr
+        y_shape = g_shape*(x*(1.+np.exp(-x))/(1.-np.exp(-x))-4.)   # In Jy/sr
+
+        # Calculate marginilizations (gaussian prior chi2, and intensity of corrections)
+        chi2_prior = 0.
+        Ic_corr = np.zeros((9,self.detector_bin_number)) # 1 dT + 8 others
+
+        # The following is adding marginilizations also over other parameters
+        # 0) Temperature shift
+        delta_T = data.mcmc_parameters['sd_delta_T']['current'] * data.mcmc_parameters['sd_delta_T']['scale']
+        # This equation is taken from Chluba+2014 [1306.5751], see also Lucca+2019 [1910.04619]
+        Ic_corr[0] = delta_T*(1.+delta_T)*g_shape + delta_T**2/2.*y_shape # In Jy/sr
+        # Add constraints
+        chi2_prior += (delta_T-self.sd_delta_T_prior_center)**2/self.sd_delta_T_prior_sigma**2
+
+        # 1) Thermal dust
+        T_D = data.mcmc_parameters['sd_T_D']['current'] * data.mcmc_parameters['sd_T_D']['scale'] # In Kelvin
+        beta_D = data.mcmc_parameters['sd_beta_D']['current'] * data.mcmc_parameters['sd_beta_D']['scale']
+        A_D = data.mcmc_parameters['sd_A_D']['current'] * data.mcmc_parameters['sd_A_D']['scale'] # In Jy/sr
+        # The equation is taken from Tab. 4 of Planck 2015 results X [1502.01588v2]
+        nu_D_ref = 545. # In GHz
+        x_D = (nu*10.**9.*const_h)/(T_D*const_k)
+        x_D_ref = (nu_D_ref*10.**9.*const_h)/(T_D*const_k)
+        dust_shape = ((x_D/x_D_ref)**(beta_D+3.))*(np.exp(x_D_ref)-1.)/(np.exp(x_D)-1.)
+        Ic_corr[1] = A_D*dust_shape
+        # Add constraints
+        chi2_prior += (T_D-self.sd_T_D_prior_center)**2./self.sd_T_D_prior_sigma**2.
+        chi2_prior += (beta_D-self.sd_beta_D_prior_center)**2./self.sd_beta_D_prior_sigma**2.
+        if(A_D < 0.):
+          return data.boundary_loglike
+
+        # 2) Cosmic Infrared Background (CIB)
+        T_C = data.mcmc_parameters['sd_T_CIB']['current'] * data.mcmc_parameters['sd_T_CIB']['scale'] # In Kelvin
+        beta_C = data.mcmc_parameters['sd_beta_CIB']['current'] * data.mcmc_parameters['sd_beta_CIB']['scale']
+        A_C = data.mcmc_parameters['sd_A_CIB']['current'] * data.mcmc_parameters['sd_A_CIB']['scale'] # In Jy/sr
+        # The equation is taken from Tab. 1 of Abitbol+2016 [1705.01534]
+        # (with the inclusion of a reference frequency, which is set as in the case of the thermal dust)
+        nu_C_ref = 545. # In GHz
+        x_C = (nu*10.**9.*const_h)/(T_C*const_k)
+        x_C_ref = (nu_C_ref*10.**9.*const_h)/(T_C*const_k)
+        cib_shape = ((x_C/x_C_ref)**(beta_C+3.))*(np.exp(x_C_ref)-1.)/(np.exp(x_C)-1.)
+        Ic_corr[2] = A_C*cib_shape
+        # Add constraints
+        chi2_prior += (T_C-self.sd_T_C_prior_center)**2./self.sd_T_C_prior_sigma**2.
+        chi2_prior += (beta_C-self.sd_beta_C_prior_center)**2./self.sd_beta_C_prior_sigma**2.
+        if(A_C < 0.):
+          return data.boundary_loglike
+
+        # 3) Synchrotron radiation
+        alpha_S = data.mcmc_parameters['sd_alpha_sync']['current'] * data.mcmc_parameters['sd_alpha_sync']['scale']
+        omega_S = data.mcmc_parameters['sd_omega_sync']['current'] * data.mcmc_parameters['sd_omega_sync']['scale']
+        A_S = data.mcmc_parameters['sd_A_sync']['current'] * data.mcmc_parameters['sd_A_sync']['scale'] # In Jy/sr
+        # The equation is taken from Tab. 1 of Abitbol+2016 [1705.01534]
+        nu_S_ref = 100. # In GHz
+        sync_shape = (nu_S_ref/nu)**alpha_S*(1.+0.5*omega_S*np.log(nu/nu_S_ref)**2.)
+        Ic_corr[3] = A_S*sync_shape
+        # Add constraints
+        chi2_prior += (alpha_S-self.sd_alpha_S_prior_center)**2./self.sd_alpha_S_prior_sigma**2.
+        chi2_prior += (A_S-self.sd_A_S_prior_center)**2./self.sd_A_S_prior_sigma**2.
+        if(A_S < 0.):
+          return data.boundary_loglike
+
+        # 4) Free free dust emission
+        # (For the definition of 'EM' compare to Draine+2011 [ISBN: 978-0-691-12214-4, also see astro-ph/9710152v2],
+        # and Tab 4 of Planck 2015 results X [1502.01588v2].
+        # Additionally, see Mukherjee+2019 [1910.02132], where they set EM=1, and instead parametrise with the use of an amplitude)
+        T_e = data.mcmc_parameters['sd_T_e']['current'] * data.mcmc_parameters['sd_T_e']['scale'] # in Kelvin
+        EM = data.mcmc_parameters['sd_EM']['current'] * data.mcmc_parameters['sd_EM']['scale'] # in pc/cm^6
+        # The equation is taken from Tab 4 of Planck 2015 results X [1502.01588v2], but converted from brightness temperature to intensity
+        g_ff = np.log(np.exp(1.)+np.exp(5.96-np.sqrt(3.)/np.pi*np.log(nu*(T_e/10.**4.)**(-1.5))))
+        tau_ff = 0.05468*EM*T_e**(-1.5)*nu**(-2.)*g_ff # 0.05468 * EM /(pc*cm^(-6)) * (T_e/Kelvin)**(-1.5)*(nu/GHz)**(-2)*g_ff
+        nu_ff_ref = 545. # In GHz
+        # Factor from Planck 2015 brightness temperature in Kelvin to Jy/sr
+        Tb_to_Inu_factor = (2.*const_k*(nu*10**9)**2/const_c**2*1e26)
+        ff_shape = Tb_to_Inu_factor*(T_e*(1.-np.exp(-tau_ff))) # In Jy/sr
+        # Since EM is perfectly degerenate with the amplitude, so we can manually fix it to 1
+        A_ff = 1.
+        Ic_corr[4] = A_ff*ff_shape
+        # Add constraints
+        chi2_prior += (T_e-self.sd_T_e_prior_center)**2./self.sd_T_e_prior_sigma**2.
+        chi2_prior += (EM-self.sd_EM_prior_center)**2./self.sd_EM_prior_sigma**2.
+        if(A_ff < 0.):
+          return data.boundary_loglike
+
+        # 5) Spinning dust emission
+        nu_p_sd = data.mcmc_parameters['sd_nu_p_spin']['current'] * data.mcmc_parameters['sd_nu_p_spin']['scale'] # in GHz
+        A_spin = data.mcmc_parameters['sd_A_spin']['current'] * data.mcmc_parameters['sd_A_spin']['scale'] # in Jy/sr
+        # The equation is taken from Tab. 4 of Planck 2015 results X [1502.01588v2], but converted from brightness temperature to intensity
+        spin_shape = np.array([self.eval_spinning_dust(np.log(nuval),np.log(nu_p_sd)) for nuval in nu])
+        Ic_corr[5] = A_spin*spin_shape
+        # Add constraints
+        chi2_prior += (nu_p_sd-self.sd_nu_p_sd_prior_center)**2./self.sd_nu_p_sd_prior_sigma**2.
+        if(A_spin < 0.):
+          return data.boundary_loglike
+
+        # 6) Integrated CO emission
+        A_CO = data.mcmc_parameters['sd_A_CO']['current'] * data.mcmc_parameters['sd_A_CO']['scale'] # Dimensionless
+        # The equation is taken from Tab. 1 of Abitbol+2016 [1705.01534]
+        CO_shape = np.array([self.eval_co_integrated(np.log(nuval)) for nuval in nu]) # In Jy/sr
+        Ic_corr[6] = A_CO*CO_shape
+        # Add constraints
+        if(A_CO < 0.):
+          return data.boundary_loglike
+
+        # 7) Reionization
+        y_reio = data.mcmc_parameters['sd_y_reio_nuisance']['current'] * data.mcmc_parameters['sd_y_reio_nuisance']['scale'] # Dimensionless
+        # The equation is taken from Chluba+2014 [1306.5751], see also Lucca+2019 [1910.04619]
+        Ic_corr[7] = y_reio*y_shape
+        # Add constraints
+        chi2_prior += (y_reio-self.sd_y_reio_sd_prior_center)**2./self.sd_y_reio_sd_prior_sigma**2.
+
+        # 8) Mu parameter (with this option we can test the sensitivity to the mu parameter, intended for testing purposes only)
+        #    Add this parameter to your 'use_nuisance' in the corresponding .data file, if you want to use it
+        if 'sd_mu_nuisance' in data.mcmc_parameters:
+          mu_nuis = data.mcmc_parameters['sd_mu_nuisance']['current'] * data.mcmc_parameters['sd_mu_nuisance']['scale']
+          Ic_corr[8] = mu_nuis*mu_shape
+        else:
+          Ic_corr[8] = 0.
+
+        Ic_corr_total = np.sum(Ic_corr,axis=0)
+
+        # Write fiducial model SD, unless it already exists
+        if self.fid_values_exist is False:
+            # Store the values now
+            fid_file = open(os.path.join(
+                self.data_directory, self.fiducial_file), 'w')
+            fid_file.write('# Fiducial parameters')
+            for key, value in iter(data.mcmc_parameters.items()):
+                fid_file.write(', %s = %.6g' % (
+                    key, value['current']*value['scale']))
+            fid_file.write('\n')
+
+            for nu_i in range(self.detector_bin_number):
+                # Get the nu values from CLASS. The above noise file checks should insure that this is consistent
+                fid_file.write("%6d  " % sd_nu[nu_i] )
+                fid_file.write("%.8g  " % (sd_amp[nu_i]+self.noise_Ic[nu_i]+Ic_corr_total[nu_i]))
+                fid_file.write("\n")
+            print('\n')
+            warnings.warn("Writing fiducial model in %s, for %s likelihood\n" % (os.path.join(self.data_directory,self.fiducial_file), self.name))
+            return 1j
+
+        # Compute likelihood
+        chi2 = 0.
+
+        Ic_obs = np.zeros(self.detector_bin_number)
+        Ic_the = np.zeros(self.detector_bin_number)
+
+        # Simplified inverse covmat (assumes uncorrelated noise)
+        invcovmat = np.eye(self.detector_bin_number)
+
+        # Calculate data, theoretical prediction, and noise
+        for nu_i in range(self.detector_bin_number):
+            Ic_obs[nu_i] = self.Ic_fid[nu_i]
+            Ic_the[nu_i] = sd_amp[nu_i]+self.noise_Ic[nu_i]+Ic_corr_total[nu_i]
+            invcovmat[nu_i,nu_i] = 1./(self.noise_Ic[nu_i]*self.noise_Ic[nu_i])
+
+        # New formula
+        chi2 = chi2_prior + np.dot((Ic_the-Ic_obs),np.dot(invcovmat,(Ic_the-Ic_obs)))
 
         return -chi2/2
 

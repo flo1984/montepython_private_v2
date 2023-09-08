@@ -1014,7 +1014,7 @@ def compute_posterior(information_instances):
                                     info.tex_names[info.native_second_index],
                                     fontsize=info.fontsize)
                         else:
-                            ax2dsub.set_xticklabels([''])
+                            ax2dsub.set_xticks([])
 
                         ax2dsub.set_yticks(info.ticks[info.native_index])
                         if second_index == 0:
@@ -1023,7 +1023,7 @@ def compute_posterior(information_instances):
                                  info.ticks[info.native_index]],
                                 fontsize=info.ticksize)
                         else:
-                            ax2dsub.set_yticklabels([''])
+                            ax2dsub.set_yticks([])
 
                         if conf.legend_style == 'sides':
                             if second_index == 0:
@@ -2107,14 +2107,14 @@ class Information(object):
         """
         self.to_derive = {}
         """
-        Array of names to re-order in the plotting. Names not included in this list
-        will appear at the end in their usual ordering
+        Dictionary whose keys are new parameter names and values are formulas to calculate them.
+        For instance :code:`{'beta_plus_lambda':'beta+lambda'}`
 
         """
         self.to_reorder = []
         """
-        Dictionary whose keys are new parameter names and values are formulas to calculate them.
-        For instance :code:`{'beta_plus_lambda':'beta+lambda'}`
+        Array of names to re-order in the plotting. Names not included in this list
+        will appear at the end in their usual ordering
 
         """
         self.to_plot = []
@@ -2249,7 +2249,7 @@ class Information(object):
             if(len(self.to_reorder)>0):
                 indices = [self.backup_names.index(name) for name in self.to_reorder]
                 missing_indices = [x for x in np.arange(len(self.backup_names)) if x not in indices]
-                indices = np.concatenate([indices,missing_indices])
+                indices = np.concatenate([indices,missing_indices],dtype=int)
                 self.ref_names = [self.ref_names[i] for i in indices]
                 self.tex_names = [self.tex_names[i] for i in indices]
                 self.backup_names = [self.backup_names[i] for i in indices]
