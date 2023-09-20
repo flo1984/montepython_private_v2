@@ -134,9 +134,11 @@ class Pantheon_Plus(Likelihood_sn):
             Mb_corr = row['m_b_corr']
 	    #this condition allows to extract the data with "good z", i.e. z>z_min
             if z_cmb > self.z_min:
-            	moduli[good_z] = 5 * np.log10((1+z_cmb)*(1+z_hel)*cosmo.angular_distance(z_cmb)) + 25
-            	Mb_obs[good_z] = Mb_corr
-            	good_z+=1
+                moduli[good_z] = 5 * np.log10((1+z_cmb)*(1+z_hel)*cosmo.angular_distance(z_cmb)) + 25
+                Mb_obs[good_z] = Mb_corr
+                #print("old "+str(index)+": "+str(Mb_obs[good_z])+" z_cmb: "+str(z_cmb))
+                good_z+=1
+        
 
         # Convenience variables: store the nuisance parameters in short named
         # variables

@@ -136,14 +136,17 @@ class Pantheon_Plus_SH0ES(Likelihood_sn):
             if row['IS_CALIBRATOR'] == 1:
                  moduli[good_z] = row['CEPH_DIST']
                  Mb_obs[good_z] = Mb_corr
+                 #print("new "+str(index)+": "+str(Mb_obs[good_z])+" z_cmb: "+str(z_cmb))
                  good_z+=1
             else:
                  if z_cmb > self.z_min:
                      moduli[good_z] = 5 * np.log10((1+z_cmb)*(1+z_hel)*cosmo.angular_distance(z_cmb)) + 25
                      Mb_obs[good_z] = Mb_corr
+                     #print("old "+str(index)+": "+str(Mb_obs[good_z])+" z_cmb: "+str(z_cmb))
                      good_z+=1
                  else:
                      pass
+            
 
         # Convenience variables: store the nuisance parameters in short named
         # variables
