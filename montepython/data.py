@@ -849,71 +849,7 @@ class Data(object):
                 except:
                     omega_nu = 0.
                 self.cosmo_arguments['omega_cdm'] = omega_m - omega_b - omega_nu
-                del self.cosmo_arguments[elem]
-
-
-            elif elem == 'f1':
-
-                f1 = self.cosmo_arguments[elem]
-                try:
-                    f2 = self.cosmo_arguments['f2']
-                    del self.cosmo_arguments['f2']
-                except:
-                    f2 = 0.0
-                
-                f_NEDE = f1+f2
-                alpha_NEDE = f2/f_NEDE
-
-                self.cosmo_arguments['f_NEDE'] = f_NEDE
-                self.cosmo_arguments['alpha_NEDE'] = alpha_NEDE
-
-                del self.cosmo_arguments[elem]
-                
-
-                
-            elif elem == 'frac_EDE':
-                
-                frac_EDE = self.cosmo_arguments[elem]
-                h = self.cosmo_arguments['h']
-                try: 
-                    mphi = 10**self.cosmo_arguments['log10mass']
-                except:
-                    mphi = self.cosmo_arguments['EDE2_clock_mass']
-                try:
-                    trigger = self.cosmo_arguments['trigger']           
-                except:
-                    try:
-                        trigger = self.cosmo_arguments['Bubble_trigger_H_over_m']
-                    except:
-                        trigger = 1.
-
-                self.cosmo_arguments['Omega_EDE2'] = frac_EDE * mphi**2 / (h * 10**5 / (2.99792458*10**8) )**2 * trigger**2
-
-                del self.cosmo_arguments[elem]
-
-            elif elem == 'log10f':
-                
-                frac_EDE = 10**self.cosmo_arguments[elem]
-                h = self.cosmo_arguments['h']
-                try: 
-                    mphi = 10**self.cosmo_arguments['log10mass']
-                except:
-                    mphi = self.cosmo_arguments['EDE2_clock_mass']
-                try:
-                    trigger = self.cosmo_arguments['trigger']           
-                except:
-                    try:
-                        trigger = self.cosmo_arguments['Bubble_trigger_H_over_m']
-                    except:
-                        trigger = 1.
-                self.cosmo_arguments['Omega_EDE2'] = frac_EDE * mphi**2 / (h * 10**5 / (2.99792458*10**8) )**2 * trigger**2
-                del self.cosmo_arguments[elem]
-
-
-                
-            elif elem == 'log10R_phi':
-                self.cosmo_arguments['EDE2_clock_pert_ini'] = 10**(-self.cosmo_arguments[elem])*self.cosmo_arguments['EDE2_clock_ini']
-                del self.cosmo_arguments[elem]
+                del self.cosmo_arguments[elem] 
                 
             elif elem == 'log10mass':
                 self.cosmo_arguments['EDE2_clock_mass'] = 10**self.cosmo_arguments[elem]
@@ -926,33 +862,11 @@ class Data(object):
             elif elem == 'log10z_ratio':
                 self.cosmo_arguments['NEDE_z_decay_over_z_step'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
-
-            elif elem == 'log10fz':
-                f_NEDE_tmp = self.cosmo_arguments['f_NEDE']
-                self.cosmo_arguments['z_decay_NEDE'] = 10**(self.cosmo_arguments[elem])*(0.1/f_NEDE_tmp)
-                del self.cosmo_arguments[elem]
-            
-            elif elem == 'log10zoverf':
-                f_NEDE_tmp = self.cosmo_arguments['f_NEDE']
-                self.cosmo_arguments['z_decay_NEDE'] = 10**(self.cosmo_arguments[elem])*(f_NEDE_tmp/0.1)
-                del self.cosmo_arguments[elem]
-
-            elif elem == 'log10z_rel':
-                self.cosmo_arguments['mass_over_q0_NEDE'] = 10**self.cosmo_arguments[elem]
-                del self.cosmo_arguments[elem]
-
-
                 
             elif elem == 'trigger':
                 self.cosmo_arguments['Bubble_trigger_H_over_m'] = self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
                 
-            elif elem == 'log10phi_ini':
-                self.cosmo_arguments['EDE2_clock_ini'] = 10**self.cosmo_arguments[elem]
-                del self.cosmo_arguments[elem]
-
-                
-     
             elif elem == 'ln10^{10}A_s':
                 self.cosmo_arguments['A_s'] = math.exp(
                     self.cosmo_arguments[elem]) / 1.e10
