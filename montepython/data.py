@@ -855,7 +855,7 @@ class Data(object):
                 self.cosmo_arguments['EDE2_clock_mass'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
 
-            elif elem == 'log10z':
+            elif elem == 'tlog10z':
                 self.cosmo_arguments['z_decay_NEDE'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
 
@@ -866,7 +866,7 @@ class Data(object):
             elif elem == 'trigger':
                 self.cosmo_arguments['Bubble_trigger_H_over_m'] = self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
-                
+
             elif elem == 'ln10^{10}A_s':
                 self.cosmo_arguments['A_s'] = math.exp(
                     self.cosmo_arguments[elem]) / 1.e10
