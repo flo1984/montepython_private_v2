@@ -1,0 +1,16 @@
+Planck_CamSpec_NPIPE12_7_TEEE.data_directory = data.path['data'] + '/Planck_CamSpec_NPIPE12_7/'
+Planck_CamSpec_NPIPE12_7_TEEE.data_ranges = 'like_NPIPE_12.7_unified_data_ranges.txt'
+Planck_CamSpec_NPIPE12_7_TEEE.cl_hat_file = 'like_NPIPE_12.7_Dl_unified_spectra.txt'
+Planck_CamSpec_NPIPE12_7_TEEE.covmat_fiducial = 'like_NPIPE_12.7_Dl_unified_cov64.bin'
+Planck_CamSpec_NPIPE12_7_TEEE.covmat_cl = ['100x100', '143x143', '217x217', '143x217', 'TE', 'EE']
+
+Planck_CamSpec_NPIPE12_7_TEEE.use_nuisance  = ['calTE', 'calEE', 'A_planck']
+Planck_CamSpec_NPIPE12_7_TEEE.use_cl = ['TE', 'EE']
+Planck_CamSpec_NPIPE12_7_TEEE.use_range = None
+
+Planck_CamSpec_NPIPE12_7_TEEE.calTE_prior_center = 1
+Planck_CamSpec_NPIPE12_7_TEEE.calTE_prior_std = 0.01
+Planck_CamSpec_NPIPE12_7_TEEE.calEE_prior_center = 1
+Planck_CamSpec_NPIPE12_7_TEEE.calEE_prior_std = 0.01
+Planck_CamSpec_NPIPE12_7_TEEE.A_planck_prior_center = 1
+Planck_CamSpec_NPIPE12_7_TEEE.A_planck_prior_std = 0.0025
