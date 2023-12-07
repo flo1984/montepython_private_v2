@@ -108,7 +108,7 @@ data.cosmo_arguments['three_cvis2_NEDE'] = 0
 data.cosmo_arguments['NEDE_ceff_nature']='tracking'
 data.cosmo_arguments['trigger_resolution'] = 0.05
 data.cosmo_arguments['NEDE_trigger_fluid_H_m'] = 0.01
-data.cosmo_arguments['z_decay_NEDE'] = 5011
+data.cosmo_arguments['z_decay_NEDE'] = 4000
 data.cosmo_arguments['three_eos_NEDE'] = 2
 
 
