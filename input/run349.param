@@ -1,7 +1,7 @@
 #------Experiments to test (separated with commas)-----
 #data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planck_lensing','bao_fs_boss_dr12','bao_smallz_2014','Pantheon']
 
-data.experiments=['Planck_CamSpec_NPIPE_TTTEEE', 'Planck_lowl_EE', 'Planck_lowl_TT', 'Planck_lensing','Pantheon','bao_smallz_2014','bao_fs_boss_dr12']
+data.experiments=['Planck_CamSpec_NPIPE12_7_TTTEEE', 'Planck_lowl_EE', 'Planck_lowl_TT', 'Planck_lensing','Pantheon','bao_smallz_2014','bao_fs_boss_dr12']
 
 #------ Settings for the over-sampling.
 # The first element will always be set to 1, for it is the sampling of the
@@ -42,7 +42,7 @@ data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
 #NEDE parameters
 data.parameters['f_NEDE']    = [0.14,   0.0000001, 0.3,  0.014,    1, 'cosmo']
-#data.parameters['log10z']    = [3.3,   2, 4,  0.08,    1, 'cosmo']
+data.parameters['log10z']    = [3.3,   2, 4,  0.08,    1, 'cosmo']
 #data.parameters['three_eos_NEDE'] = [2,   1, 3,  0.08,   1, 'cosmo']
 data.parameters['Omega0_NEDE_trigger_DM'] = [0.01,   0.00001, 0.1,  0.01,   1, 'cosmo']
 
@@ -108,7 +108,7 @@ data.cosmo_arguments['three_cvis2_NEDE'] = 0
 data.cosmo_arguments['NEDE_ceff_nature']='tracking'
 data.cosmo_arguments['trigger_resolution'] = 0.05
 data.cosmo_arguments['NEDE_trigger_fluid_H_m'] = 0.01
-data.cosmo_arguments['z_decay_NEDE'] = 4000
+#data.cosmo_arguments['z_decay_NEDE'] = 4000
 data.cosmo_arguments['three_eos_NEDE'] = 2
 
 
