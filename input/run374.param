@@ -130,7 +130,7 @@ data.cosmo_arguments['T_ncdm'] = 0.71611
 # These two are required to get sigma8 as a derived parameter
 # (class must compute the P(k) until sufficient k)
 data.cosmo_arguments['output'] = 'mPk'
-data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
+data.cosmo_arguments['P_k_max_h/Mpc'] = 2.
 data.cosmo_arguments['z_max_pk']=4.
 
 data.cosmo_arguments['H_over_m_NEDE']=0.2
