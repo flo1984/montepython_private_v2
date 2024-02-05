@@ -1,20 +1,8 @@
 import os
-import numpy as np
-from montepython.likelihood_class import Likelihood
-import scipy.constants as conts
+from montepython.likelihood_class import Likelihood_prior
 
 class BBN_Neff(Likelihood):
 
-    # initialization routine
-
-    def __init__(self, path, data, command_line):
-
-        Likelihood.__init__(self, path, data, command_line)
-
-
-        # end of initialization
-
-    # compute likelihood
 
     def loglkl(self, cosmo, data):
 
