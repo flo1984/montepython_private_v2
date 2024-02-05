@@ -107,7 +107,7 @@ data.parameters['Omega_m']              = [0, None, None, 0,     1,   'derived']
 #data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
 data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
 #data.parameters['z_decay']          = [0, None, None, 0,     1,   'derived']
-data.parameters['S8'] = [0, None, None, 0,     1,   'derived']
+#data.parameters['S8'] = [0, None, None, 0,     1,   'derived']
 data.parameters['delta_N_eff_IR']     = [0, None, None, 0,     1,   'derived']
 data.parameters['delta_N_eff_UV']     = [0, None, None, 0,     1,   'derived']
 
