@@ -1,7 +1,7 @@
 import os
 from montepython.likelihood_class import Likelihood_prior
 
-class BBN_Neff(Likelihood):
+class BBN_Neff(Likelihood_prior):
 
 
     def loglkl(self, cosmo, data):
