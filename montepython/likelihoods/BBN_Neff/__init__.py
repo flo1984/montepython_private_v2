@@ -8,7 +8,7 @@ class BBN_Neff(Likelihood_prior):
 
         chi2 = 0.
 
-        theo = cosmo.get_current_derived_parameters(['delta_N_eff_UV'])['delta_N_eff_UV'] + 3.044
+        theo = cosmo.get_current_derived_parameters(['delta_N_eff_UV'])['delta_N_eff_UV'] + cosmo.get_current_derived_parameters(['Neff'])['Neff'] 
 
         chi2 += ((theo - self.Neff) / self.error) ** 2
 

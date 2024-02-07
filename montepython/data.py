@@ -862,6 +862,10 @@ class Data(object):
             elif elem == 'log10z_ratio':
                 self.cosmo_arguments['NEDE_z_decay_over_z_step'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
+
+            elif elem == 'log10rg':
+                self.cosmo_arguments['rg_HNEDE'] = 10**self.cosmo_arguments[elem]
+                del self.cosmo_arguments[elem]
                 
             elif elem == 'trigger':
                 self.cosmo_arguments['Bubble_trigger_H_over_m'] = self.cosmo_arguments[elem]
