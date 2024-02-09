@@ -1,5 +1,5 @@
 #------Experiments to test (separated with commas)-----
-data.experiments=['Planck_highl_TTTEEE','Planck_lowl_EE','Planck_lowl_TT','Planck_lensing','bao_smallz_2014','bao_boss_dr12','Pantheon','H0_local_R21']
+data.experiments=['Planck_highl_TTTEEE','Planck_lowl_EE','Planck_lowl_TT','Planck_lensing','bao_smallz_2014','bao_boss_dr12','Pantheon']
 
 
 #------ Settings for the over-sampling.
@@ -40,10 +40,10 @@ data.parameters['ln10^{10}A_s'] = [ 3.077,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
 #NEDE parameters
-data.parameters['f_HNEDE']    = [0.14,   0.0000001, 0.3,  0.014,    1, 'cosmo']
+#data.parameters['f_HNEDE']    = [0.14,   0.0000001, 0.3,  0.014,    1, 'cosmo']
 #data.parameters['log10z']    = [3.3,   2, 4,  0.08,    1, 'cosmo']
-data.parameters['log10z_ratio'] = [1,   0.01, 3,  0.08,   1, 'cosmo']
-data.parameters['log10rg']=[ 0,-2,3,0.08,1,'cosmo']
+#data.parameters['log10z_ratio'] = [1,   0.01, 2,  0.08,   1, 'cosmo']
+#data.parameters['log10rg']=[ 0,-2,3,0.08,1,'cosmo']
 
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
@@ -104,9 +104,9 @@ data.parameters['H0']              = [0, None, None, 0,     1,   'derived']
 data.parameters['Omega_m']              = [0, None, None, 0,     1,   'derived']
 data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
 data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
-data.parameters['delta_N_eff_IR']     = [0, None, None, 0,     1,   'derived']
-data.parameters['delta_N_eff_UV']     = [0, None, None, 0,     1,   'derived']
-data.parameters['Neff']     = [0, None, None, 0,     1,   'derived']
+#data.parameters['delta_N_eff_IR']     = [0, None, None, 0,     1,   'derived']
+#data.parameters['delta_N_eff_UV']     = [0, None, None, 0,     1,   'derived']
+#data.parameters['Neff']     = [0, None, None, 0,     1,   'derived']
 
 
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
@@ -123,31 +123,32 @@ data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 
 
-data.cosmo_arguments['Junction_tag'] = 1
-data.cosmo_arguments['FLAG_HOTNEDESCENARIO'] = 3
+#data.cosmo_arguments['Junction_tag'] = 1
+#data.cosmo_arguments['FLAG_HOTNEDESCENARIO'] = 3
 
 
 #data.cosmo_arguments['rg_HNEDE'] = 0.0
 #data.cosmo_arguments['NEDE_z_decay_over_z_step'] = 1.001
-data.cosmo_arguments['NEDE_z_decay'] = 1000000 
+#data.cosmo_arguments['NEDE_z_decay'] = 1000000 
+
 data.cosmo_arguments['N_ur'] = 3.044 
 
-data.cosmo_arguments['omega_idm_dr']=1.e-5
-data.cosmo_arguments['three_cvis2_NEDE']=0
-data.cosmo_arguments['three_eos_NEDE']=2
+#data.cosmo_arguments['omega_idm_dr']=1.e-5
+#data.cosmo_arguments['three_cvis2_NEDE']=0
+#data.cosmo_arguments['three_eos_NEDE']=2
 
-data.cosmo_arguments['xi_idr']=0.1
-data.cosmo_arguments['stat_f_idr']=1
-data.cosmo_arguments['Gamma_0_nadm']=1.65e-10
-data.cosmo_arguments['alpha_idm_dr']=0.75
-data.cosmo_arguments['beta_idr']=0.75
+#data.cosmo_arguments['xi_idr']=0.1
+#data.cosmo_arguments['stat_f_idr']=1
+#data.cosmo_arguments['Gamma_0_nadm']=1.65e-10
+#data.cosmo_arguments['alpha_idm_dr']=0.75
+#data.cosmo_arguments['beta_idr']=0.75
 
 
 
 
 data.cosmo_arguments['back_integration_stepsize'] = 5.e-3
-data.cosmo_arguments['sub_dom_cond'] = 1.e-6
-data.cosmo_arguments['decay_res_enhancement'] = 100
+#data.cosmo_arguments['sub_dom_cond'] = 1.e-6
+#data.cosmo_arguments['decay_res_enhancement'] = 100
 
 
 
@@ -157,8 +158,8 @@ data.cosmo_arguments['decay_res_enhancement'] = 100
 #data.cosmo_arguments['tol_perturb_integration'] = 1.0e-6
 
 #makes sure that all modes start before the transition of EDE, i.e. before z=30k.
-data.cosmo_arguments['start_large_k_at_tau_h_over_tau_k'] = 0.000001
-data.cosmo_arguments['start_small_k_at_tau_c_over_tau_h'] = 0.000001
+#data.cosmo_arguments['start_large_k_at_tau_h_over_tau_k'] = 0.000001
+#data.cosmo_arguments['start_small_k_at_tau_c_over_tau_h'] = 0.000001
 
 
 #------ Mcmc parameters ----
