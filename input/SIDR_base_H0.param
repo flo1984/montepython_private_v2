@@ -140,7 +140,7 @@ data.cosmo_arguments['N_ur'] = 3.044
 data.cosmo_arguments['stat_f_idr']=1
 data.cosmo_arguments['Gamma_0_nadm']=1.65e-10
 data.cosmo_arguments['alpha_idm_dr']=0.75
-data.cosmo_arguments['beta_ida']=0.75
+data.cosmo_arguments['beta_idr']=0.75
 data.cosmo_arguments['omega_idm_dr']=1.e-5
 
 
