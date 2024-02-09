@@ -143,7 +143,7 @@ data.cosmo_arguments['alpha_idm_dr']=0.75
 data.cosmo_arguments['beta_idr']=0.75
 data.cosmo_arguments['idr_nature']='fluid'
 data.cosmo_arguments['omega_idm_dr']=1.e-5
-data.cosmo_arguments['a_idm_dr']=0.0
+
 
 
 data.cosmo_arguments['back_integration_stepsize'] = 5.e-3
