@@ -855,6 +855,10 @@ class Data(object):
                 self.cosmo_arguments['EDE2_clock_mass'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
 
+            elif elem == 'xi4_idr':
+                self.cosmo_arguments['xi_idr'] = self.cosmo_arguments[elem]**0.25
+                del self.cosmo_arguments[elem]
+
             elif elem == 'log10z':
                 self.cosmo_arguments['NEDE_z_decay'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
