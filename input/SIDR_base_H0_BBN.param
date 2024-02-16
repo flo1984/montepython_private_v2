@@ -40,7 +40,7 @@ data.parameters['ln10^{10}A_s'] = [ 3.077,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
 #SIDR parameters
-data.parameters['xi_idr']    = [0.14,   0.0000001, 1.0,  0.014,    1, 'cosmo']
+data.parameters['xi4_idr']    = [0.14,   0.0000001, 1.0,  0.014,    1, 'cosmo']
 
 
 
@@ -103,8 +103,8 @@ data.parameters['H0']              = [0, None, None, 0,     1,   'derived']
 data.parameters['Omega_m']              = [0, None, None, 0,     1,   'derived']
 data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
 data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
-#data.parameters['delta_N_eff_IR']     = [0, None, None, 0,     1,   'derived']
-#data.parameters['delta_N_eff_UV']     = [0, None, None, 0,     1,   'derived']
+data.parameters['delta_N_eff_IR']     = [0, None, None, 0,     1,   'derived']
+data.parameters['delta_N_eff_UV']     = [0, None, None, 0,     1,   'derived']
 data.parameters['Neff']     = [0, None, None, 0,     1,   'derived']
 
 
