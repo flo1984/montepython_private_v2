@@ -860,7 +860,14 @@ class Data(object):
                 del self.cosmo_arguments[elem]
 
             elif elem == 'log10z':
-                self.cosmo_arguments['NEDE_z_decay'] = 10**self.cosmo_arguments[elem]
+                self.cosmo_arguments['z_decay_NEDE'] = 10**self.cosmo_arguments[elem]
+                del self.cosmo_arguments[elem]
+
+            elif elem == 'y_dwdlna':
+                if ( self.cosmo_arguments['three_eos_NEDE']/3.*2. > self.cosmo_arguments['d2wdlna2']*math.log(self.cosmo_arguments['z_decay_NEDE'])*math.log(self.cosmo_argumets['z_decay_NEDE'])   ):
+                    self.cosmo_arguments['dwdlna'] = self.cosmo_arguments[elem]  - self.cosmo_arguments['three_eos_NEDE']/3./math.log(self.cosmo_arguments['z_decay_NEDE']) - 0.5*self.cosmo_arguments['d2wdlna2']*math.log( self.cosmo_arguments['z_decay_NEDE'] )
+                else:
+                    self.cosmo_arguments['dwdlna'] = self.cosmo_arguments[elem] - ( self.cosmo_arguments['three_eos_NEDE']/3.*2.* self.cosmo_arguments['d2wdlna2']  )**0.5
                 del self.cosmo_arguments[elem]
 
             elif elem == 'log10z_ratio':
@@ -875,13 +882,6 @@ class Data(object):
                 self.cosmo_arguments['Bubble_trigger_H_over_m'] = self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
 
-            elif elem == 'y_dwdlna':
-                if (  self.cosmo_arguments['three_eos_NEDE']/3.*2. > self.cosmo_arguments['d2wdlna2']*math.log(self.cosmo_arguments['z_decay_NEDE'])*math.log(self.cosmo_argumets['z_decay_NEDE'])   ):
-                    self.cosmo_arguments['dwdlna'] = self.cosmo_arguments[elem]  - self.cosmo_arguments['three_eos_NEDE']/3./math.log(self.cosmo_arguments['z_decay_NEDE']) - 0.5*self.cosmo_arguments['d2wdlna2']*math.log( self.cosmo_arguments['z_decay_NEDE'] )
-                else:
-                    self.cosmo_arguments['dwdlna'] = self.cosmo_arguments[elem] - ( self.cosmo_arguments['three_eos_NEDE']/3.*2.* self.cosmo_arguments['d2wdlna2']  )**0.5
-                del self.cosmo_arguments[elem]
-                
             elif elem == 'ln10^{10}A_s':
                 self.cosmo_arguments['A_s'] = math.exp(
                     self.cosmo_arguments[elem]) / 1.e10
