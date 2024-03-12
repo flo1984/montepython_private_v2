@@ -864,7 +864,7 @@ class Data(object):
                 del self.cosmo_arguments[elem]
 
             elif elem == 'y_dwdlna':
-                if ( self.cosmo_arguments['three_eos_NEDE']/3.*2. > self.cosmo_arguments['d2wdlna2']*math.log(self.cosmo_arguments['z_decay_NEDE'])*math.log(self.cosmo_argumets['z_decay_NEDE'])   ):
+                if ( self.cosmo_arguments['three_eos_NEDE']/3.*2. > self.cosmo_arguments['d2wdlna2']*math.log(self.cosmo_arguments['z_decay_NEDE'])*math.log(self.cosmo_arguments['z_decay_NEDE'])   ):
                     self.cosmo_arguments['dwdlna'] = self.cosmo_arguments[elem]  - self.cosmo_arguments['three_eos_NEDE']/3./math.log(self.cosmo_arguments['z_decay_NEDE']) - 0.5*self.cosmo_arguments['d2wdlna2']*math.log( self.cosmo_arguments['z_decay_NEDE'] )
                 else:
                     self.cosmo_arguments['dwdlna'] = self.cosmo_arguments[elem] - ( self.cosmo_arguments['three_eos_NEDE']/3.*2.* self.cosmo_arguments['d2wdlna2']  )**0.5
