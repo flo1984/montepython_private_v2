@@ -20,7 +20,7 @@ class sh0es_Mb_22(Likelihood):
 
         chi2 = 0.
 
-        theo = cosmo. cosmo.get_current_derived_parameters(['M'])['M']
+        theo = cosmo.get_current_derived_parameters(['M'])['M']
         
         chi2 += ((theo - self.M) / self.error) ** 2
 
