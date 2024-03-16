@@ -20,9 +20,10 @@ class sh0es_Mb_22(Likelihood):
 
         chi2 = 0.
 
-        theo = cosmo.get_current_derived_parameters(['M'])['M']
+        M_theo = (data.mcmc_parameters['M']['current'] *
+             data.mcmc_parameters['M']['scale'])
         
-        chi2 += ((theo - self.M) / self.error) ** 2
+        chi2 += ((M_theo - self.M) / self.error) ** 2
 
         # return ln(L)
         lkl = - 0.5 * chi2
