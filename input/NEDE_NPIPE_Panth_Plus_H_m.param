@@ -2,7 +2,7 @@
 #data.experiments=['Planck_highl_TTTEEE','Planck_lowl_TT','Planck_lowl_EE','Planck_lensing','bao_fs_boss_dr12','bao_smallz_2014','Pantheon_Plus']
 #data.experiments=['Planck_CamSpec_NPIPE_TTTEEE', 'Planck_lowl_EE', 'Planck_lowl_TT', 'Planck_lensing','Pantheon','bao_smallz_2014','bao_fs_boss_dr12','sh0es_Mb_22']
 #data.experiments=['Planck_CamSpec_NPIPE12_7_TTTEEE', 'Planck_lowl_EE', 'Planck_lowl_TT', 'Planck_lensing','Pantheon_Plus','bao_smallz_2014','bao_fs_boss_dr12']
-data.experiments=['Planck_CamSpec_NPIPE12_7_TTTEEE', 'Planck_lowl_EE', 'Planck_lowl_TT', 'Planck_lensing','Pantheon','bao_smallz_2014','bao_fs_boss_dr12','sh0es_Mb_22']
+data.experiments=['Planck_CamSpec_NPIPE12_7_TTTEEE', 'Planck_lowl_EE', 'Planck_lowl_TT', 'Planck_lensing','Pantheon_Plus','bao_smallz_2014','bao_fs_boss_dr12','sh0es_Mb_22']
 
 #------ Settings for the over-sampling.
 # The first element will always be set to 1, for it is the sampling of the
