@@ -779,6 +779,13 @@ def create_parser():
     # -- minimize argument, minimization tolerance (OPTIONAL)
     runparser.add_argument('--minimize-tol', help=helpdict['minimize-tol'], type=float,
                            dest='minimize_tol', default=0.00001)
+    
+
+    ###Alex edit###
+    runparser.add_argument('--bobyqa',
+                           action='store_true')
+    ###End of Alex
+
     # -- fisher (OPTIONAL)
     runparser.add_argument('--fisher', help=helpdict['fisher'],
                            action='store_true')

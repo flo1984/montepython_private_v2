@@ -29,6 +29,12 @@ import os
 import scipy.linalg as la
 import scipy.optimize as op
 
+#Alex Reeves edit
+import pybobyqa
+
+
+
+
 def run(cosmo, data, command_line):
     """
     Depending on the choice of sampler, dispatch the appropriate information
@@ -354,11 +360,16 @@ def get_covariance_matrix(cosmo, data, command_line):
 
 def get_minimum(cosmo, data, command_line, covmat):
 
-    if not command_line.silent:
-        warnings.warn("Minimization implementation is being tested")
+#    if not command_line.silent:
+#        warnings.warn("Minimization implementation is being tested")
 
     # Create the center dictionary, which will hold the center point
     # information
+    if not command_line.silent:
+        warnings.warn("Minimization implementation is being tested")
+
+        # Create the center dictionary, which will hold the center point
+        # information
     center = {}
     parameter_names = data.get_mcmc_parameters(['varying'])
 
@@ -366,33 +377,130 @@ def get_minimum(cosmo, data, command_line, covmat):
         for elem in parameter_names:
             center[elem] = data.mcmc_parameters[elem]['initial'][0]
     else:
+  #          bounds[index,1] = data.mcmc_parameters[elem]['initial'][2]
+  #      cons += ({'type': 'ineq', 'fun': lambda x: x[index] - bounds[index,0]},
+   #              {'type': 'ineq', 'fun': lambda x: bounds[index,1] - x[index]},)
+    #    print('bounds on ',elem,' : ',bounds[index,0],bounds[index,1])
         read_args_from_bestfit(data, command_line.bf)
         for elem in parameter_names:
             center[elem] = data.mcmc_parameters[elem]['last_accepted']
 
     stepsizes = np.zeros(len(parameter_names), 'float64')
     parameters = np.zeros(len(parameter_names), 'float64')
-    bounds = np.zeros([len(parameter_names),2], 'float64')
-    cons = ()
-    for index, elem in enumerate(parameter_names):
-        parameters[index] = center[elem]
-        stepsizes[index] = 0.1*covmat[index,index]**0.5
-        if data.mcmc_parameters[elem]['initial'][1] == None:
-            bounds[index,0] = center[elem] - 1.*covmat[index,index]**0.5
-        else:
-            bounds[index,0] = data.mcmc_parameters[elem]['initial'][1]
-        if data.mcmc_parameters[elem]['initial'][2] == None:
-            bounds[index,1] = center[elem] + 1.*covmat[index,index]**0.5
-        else:
-            bounds[index,1] = data.mcmc_parameters[elem]['initial'][2]
-        cons += ({'type': 'ineq', 'fun': lambda x: x[index] - bounds[index,0]},
-                 {'type': 'ineq', 'fun': lambda x: bounds[index,1] - x[index]},)
-        print('bounds on ',elem,' : ',bounds[index,0],bounds[index,1])
+
+  #  center = {}
+#    parameter_names = data.get_mcmc_parameters(['varying'])
+    if not command_line.bobyqa:
+
+   # if not command_line.bf:
+   #     for elem in parameter_names:
+   #         center[elem] = data.mcmc_parameters[elem]['initial'][0]
+   # else:
+   #     read_args_from_bestfit(data, command_line.bf)
+   #     for elem in parameter_names:
+   #         center[elem] = data.mcmc_parameters[elem]['last_accepted']
+        print('****MINIMISE USING SCIPY****')
+  #  stepsizes = np.zeros(len(parameter_names), 'float64')
+  #  parameters = np.zeros(len(parameter_names), 'float64')
+  #  bounds = np.zeros([len(parameter_names),2], 'float64')
+  #  cons = ()
+  #  for index, elem in enumerate(parameter_names):
+  #      parameters[index] = center[elem]
+  #      stepsizes[index] = 0.1*covmat[index,index]**0.5
+  #      if data.mcmc_parameters[elem]['initial'][1] == None:
+  #          bounds[index,0] = center[elem] - 1.*covmat[index,index]**0.5
+  #      else:
+  #          bounds[index,0] = data.mcmc_parameters[elem]['initial'][1]
+  #      if data.mcmc_parameters[elem]['initial'][2] == None:
+  #          bounds[index,1] = center[elem] + 1.*covmat[index,index]**0.5
+        bounds = np.zeros([len(parameter_names),2], 'float64')
+        cons = ()
+        for index, elem in enumerate(parameter_names):
+            parameters[index] = center[elem]
+            stepsizes[index] = 0.1*covmat[index,index]**0.5
+            if data.mcmc_parameters[elem]['initial'][1] == None:
+                bounds[index,0] = center[elem] - 1.*covmat[index,index]**0.5
+            else:
+                bounds[index,0] = data.mcmc_parameters[elem]['initial'][1]
+            if data.mcmc_parameters[elem]['initial'][2] == None:
+                bounds[index,1] = center[elem] + 1.*covmat[index,index]**0.5
+            else:
+                bounds[index,1] = data.mcmc_parameters[elem]['initial'][2]
+            cons += ({'type': 'ineq', 'fun': lambda x: x[index] - bounds[index,0]},
+                    {'type': 'ineq', 'fun': lambda x: bounds[index,1] - x[index]},)
+            print('bounds on ',elem,' : ',bounds[index,0],bounds[index,1])
+
+        #FK: use list-comprehension so that the parameter values are distinguishable from step to step
+        print('parameters: ',[param for param in parameters])
+        print('stepsizes: ',stepsizes[0])
+        print('bounds: ',bounds)
+
+        #minimum, chi2 = op.fmin_cg(chi2_eff,
+        # Use unconstrained Polak & Ribiere conjugate gradient algorithm
+        # CosmoMC uses a constrained (Fletcher & Reeves) version of this
+        #xopt, fopt, func_calls, grad_calls, warnflags, allvecs = op.fmin_cg(chi2_eff,
+        #                                                                    parameters,
+        #                                                                    #fprime = gradient_chi2_eff,
+        #                                                                    epsilon = stepsizes,
+        #                                                                    args = (cosmo,data),#bounds),
+        #                                                                    full_output = True,
+        #                                                                    disp = True,
+        #                                                                    retall = True)
+        # Use constrained Newton conjugate gradient algorithm
+        #x, nfeval, rc = op.fmin_tnc(chi2_eff,
+        #                            parameters,
+        #                            #fprime = gradient_chi2_eff,
+        #                            args = (cosmo,data),
+        #                            approx_grad = True,
+        #                            bounds = bounds,
+        #                            epsilon = stepsizes,
+        #                            disp = 5)
+
+        #result = op.minimize(chi2_eff,
+        #                     parameters,
+        #                     args = (cosmo,data),
+        #                     method='COBYLA',
+        #                     #method='SLSQP',
+        #                     constraints=cons,
+        #                     #bounds=bounds,
+        #                     tol=0.000001,
+        #                     options = {'disp': True,
+        #                                'rhobeg': stepsizes})
+        #                                #'eps': stepsizes})
+
+        # For HST with 1 param the best is TNC with 'eps':stepsizes, bounds, tol, although bounds make it smlower (but avoids htting unphysical region)
+        # For forecasts or Planck lite SLSQP with tol=0.00001 works well, but does not work for full Planck TTTEEE highl
+        result = op.minimize(chi2_eff,
+                            parameters,
+                            args = (cosmo,data),
+                            #method='trust-region-exact',
+                            #method='BFGS',
+                            #method='TNC',
+                            #method='L-BFGS-B',
+                            method='SLSQP',
+                            #options={'eps':stepsizes},
+                            #constraints=cons,
+                            bounds=bounds,
+                            tol=command_line.minimize_tol)
+                            #options = {'disp': True})
+                                        #'initial_tr_radius': stepsizes,
+                                        #'max_tr_radius': stepsizes})
+
+        #result = op.differential_evolution(chi2_eff,
+        #                                   bounds,
+        #                                   args = (cosmo,data))
+
+        print('Final output of minimize')
+        for index,elem in enumerate(parameter_names):
+            print(elem, 'new:', result.x[index], ', old:', parameters[index])
+
+        #FK: return also min chi^2:
+        return result.x, result.fun
 
     #FK: use list-comprehension so that the parameter values are distinguishable from step to step
-    print('parameters: ',[param for param in parameters])
-    print('stepsizes: ',stepsizes[0])
-    print('bounds: ',bounds)
+   # print('parameters: ',[param for param in parameters])
+   # print('stepsizes: ',stepsizes[0])
+   # print('bounds: ',bounds)
 
     #minimum, chi2 = op.fmin_cg(chi2_eff,
     # Use unconstrained Polak & Ribiere conjugate gradient algorithm
@@ -429,33 +537,81 @@ def get_minimum(cosmo, data, command_line, covmat):
 
     # For HST with 1 param the best is TNC with 'eps':stepsizes, bounds, tol, although bounds make it smlower (but avoids htting unphysical region)
     # For forecasts or Planck lite SLSQP with tol=0.00001 works well, but does not work for full Planck TTTEEE highl
-    result = op.minimize(chi2_eff,
-                         parameters,
-                         args = (cosmo,data),
-                         #method='trust-region-exact',
-                         #method='BFGS',
-                         #method='TNC',
-                         #method='L-BFGS-B',
-                         method='SLSQP',
-                         #options={'eps':stepsizes},
-                         #constraints=cons,
-                         bounds=bounds,
-                         tol=command_line.minimize_tol)
-                         #options = {'disp': True})
-                                    #'initial_tr_radius': stepsizes,
-                                    #'max_tr_radius': stepsizes})
+  #  result = op.minimize(chi2_eff,
+  #                       parameters,
+   #                      args = (cosmo,data),
+    #                     #method='trust-region-exact',
+     #                    #method='BFGS',
+       #                  #method='TNC',
+        #                 #method='L-BFGS-B',
+         #                method='SLSQP',
+          #               #options={'eps':stepsizes},
+           #              #constraints=cons,
+            #             bounds=bounds,
+             #            tol=command_line.minimize_tol)
+              #           #options = {'disp': True})
+               #                     #'initial_tr_radius': stepsizes,
+                #                    #'max_tr_radius': stepsizes})
 
     #result = op.differential_evolution(chi2_eff,
     #                                   bounds,
     #                                   args = (cosmo,data))
 
-    print('Final output of minimize')
-    for index,elem in enumerate(parameter_names):
-        print(elem, 'new:', result.x[index], ', old:', parameters[index])
+  #  print('Final output of minimize')
+   # for index,elem in enumerate(parameter_names):
+    #    print(elem, 'new:', result.x[index], ', old:', parameters[index])
+    else:
+        print("****MINIMISE USING BOBYQA MINIMISER****")
 
+    ###Alex Reeves edit###
+
+    #Put bounds in the correct format for BOBYQA minimiser
+    #use the same method of generating bounds from covmat and central values either from bestfit or initial positions if no chains run
+    #upper and lower are the upper and lower bounds
+        lower = np.zeros([len(parameter_names), ], 'float64')
+        upper = np.zeros([len(parameter_names), ], 'float64')
+        cons = ()
+        for index, elem in enumerate(parameter_names):
+            parameters[index] = center[elem]
+            stepsizes[index] = 0.1*covmat[index, index]**0.5
+            if data.mcmc_parameters[elem]['initial'][1] == None:
+                lower[index] = center[elem] - 1. * \
+                    covmat[index, index]**0.5  # increasing width test
+
+            else:
+                lower[index] = data.mcmc_parameters[elem]['initial'][1]
+            if data.mcmc_parameters[elem]['initial'][2] == None:
+                upper[index] = center[elem] + 1.*covmat[index, index]**0.5
+
+            else:
+                upper[index] = data.mcmc_parameters[elem]['initial'][2]
+
+            cons += ({'type': 'ineq', 'fun': lambda x: x[index] - lower[index]},
+                     {'type': 'ineq', 'fun': lambda x: upper[index] - x[index]},)
+
+            print('bounds on ', elem, ' : ', lower[index], upper[index])
+
+        bounds = (lower, upper)
+        #FK: use list-comprehension so that the parameter values are distinguishable from step to step
+        print('parameters: ', [param for param in parameters])
+
+        #Alex Reeves edit
+        #Bear in mind **scaling within bounds** is used here and the minimize_tol therefore corresponds to the rescaled parameters
+        result = pybobyqa.solve(chi2_eff,
+                                parameters,
+                                args=(cosmo, data),
+                                bounds=bounds,
+                                scaling_within_bounds=True,
+                                rhoend=command_line.minimize_tol)
+
+        print('Final output of minimize')
+
+        for index, elem in enumerate(parameter_names):
+            print(elem, 'new:', result.x[index], ', old:', parameters[index])
     #FK: return also min chi^2:
-    return result.x, result.fun
-
+ #   return result.x, result.fun
+        return result.x, result.f
+    
 def chi2_eff(params, cosmo, data, bounds=False):
     parameter_names = data.get_mcmc_parameters(['varying'])
     for index, elem in enumerate(parameter_names):
