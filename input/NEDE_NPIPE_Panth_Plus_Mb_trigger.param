@@ -78,7 +78,8 @@ data.parameters['z_decay']          = [0, None, None, 0,     1,   'derived']
 data.parameters['NEDE_trigger_mass'] = [0, None, None, 0,     1,   'derived']
 data.parameters['S8'] = [0, None, None, 0,     1,   'derived']
 #data.parameters['NEDE_trigger_ini'] = [0, None, None, 0,     1,   'derived']
-data.parameters['dwdlna']          = [0, None, None, 0,     1,   'derived']
+#data.parameters['dwdlna']          = [0, None, None, 0,     1,   'derived']
+
 
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
 
@@ -104,6 +105,8 @@ data.cosmo_arguments['output'] = 'mPk'
 data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 
+data.cosmo_arguments['y_dwdlna'] = 0.0
+data.cosmo_arguments['d2wdlna2'] = 0.0
 data.cosmo_arguments['H_over_m_NEDE']=0.2
 #data.cosmo_arguments['NEDE_trigger_ini'] = 0.0001
 data.cosmo_arguments['Junction_tag'] = 1
