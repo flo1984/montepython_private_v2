@@ -103,7 +103,7 @@ data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 data.cosmo_arguments['dwdlna'] = 0.0
 data.cosmo_arguments['d2wdlna2'] = 0.0
-data.cosmo_arguments['z_decay'] = 3864
+data.cosmo_arguments['z_decay_NEDE'] = 3864
 data.cosmo_arguments['three_eos_NEDE'] = 2.065
 data.cosmo_arguments['H_over_m_NEDE']=0.2
 #data.cosmo_arguments['NEDE_trigger_ini'] = 0.0001
