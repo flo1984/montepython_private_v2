@@ -860,7 +860,7 @@ class Data(object):
                 del self.cosmo_arguments[elem]
 
             elif elem == 'log10z':
-                self.cosmo_arguments['z_decay_NEDE'] = 10**self.cosmo_arguments[elem]
+                self.cosmo_arguments['NEDE_z_decay'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
 
             elif elem == 'y_dwdlna':
