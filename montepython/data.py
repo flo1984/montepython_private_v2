@@ -863,6 +863,11 @@ class Data(object):
                 #self.cosmo_arguments['NEDE_z_decay'] = 10**self.cosmo_arguments[elem]
                 self.cosmo_arguments['z_decay_NEDE'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
+            
+            elif elem == 'log10z_stop':
+                #self.cosmo_arguments['NEDE_z_decay'] = 10**self.cosmo_arguments[elem]
+                self.cosmo_arguments['z_stop'] = 10**self.cosmo_arguments[elem]
+                del self.cosmo_arguments[elem]
 
             elif elem == 'y_dwdlna':
                 if ( self.cosmo_arguments['three_eos_NEDE']/3.*2. > self.cosmo_arguments['d2wdlna2']*math.log(self.cosmo_arguments['z_decay_NEDE'])*math.log(self.cosmo_arguments['z_decay_NEDE'])   ):
