@@ -125,6 +125,7 @@ data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 
 data.cosmo_arguments['f_idm_drmd'] = 0.05
+data.cosmo_arguments['idm_drmd_tight_coupling_trigger_G_over_aH'] = 1000000
 #data.cosmo_arguments['G_over_aH_drmd_ini']=22000 
 data.cosmo_arguments['N_ur'] = 3.044 
 data.cosmo_arguments['YHe'] = 0.2454 
@@ -135,7 +136,7 @@ data.cosmo_arguments['YHe'] = 0.2454
 
 #data.cosmo_arguments['background_verbose'] = 4
 #data.cosmo_arguments['perturbations_verbose'] = 2
-#data.cosmo_arguments['tol_perturb_integration'] = 1.0e-6
+
 
 
 
