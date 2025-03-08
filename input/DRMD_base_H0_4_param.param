@@ -107,7 +107,7 @@ data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
 data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
 data.parameters['f_drmd']          = [0, None, None, 0,     1,   'derived']
 data.parameters['z_dec_drmd']          = [0, None, None, 0,     1,   'derived']
-
+data.parameters['YHe']          = [0, None, None, 0,     1,   'derived']
 
 
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
@@ -130,8 +130,6 @@ data.cosmo_arguments['T_ncdm'] = 0.71611
 data.cosmo_arguments['output'] = 'mPk'
 data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
-
-data.cosmo_arguments['YHe'] = 0.2454 
 
 
 

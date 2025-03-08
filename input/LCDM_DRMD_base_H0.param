@@ -100,14 +100,13 @@ data.parameters['H0']              = [0, None, None, 0,     1,   'derived']
 data.parameters['Omega_m']              = [0, None, None, 0,     1,   'derived']
 data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
 data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
-data.parameters['f_drmd']          = [0, None, None, 0,     1,   'derived']
-data.parameters['z_dec_drmd']          = [0, None, None, 0,     1,   'derived']
+data.parameters['YHe']          = [0, None, None, 0,     1,   'derived']
 
 
 
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
 
-data.cosmo_arguments['sBBN file'] = data.path['cosmo']+'/bbn/sBBN.dat'
+#data.cosmo_arguments['sBBN file'] = data.path['cosmo']+'/bbn/sBBN.dat'
 data.cosmo_arguments['k_pivot'] = 0.05
  
 # The base model features two massless
@@ -128,8 +127,8 @@ data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 
 
-data.cosmo_arguments['background_verbose'] = 4
-data.cosmo_arguments['thermodynamics_verbose'] = 4
+#data.cosmo_arguments['background_verbose'] = 4
+#data.cosmo_arguments['thermodynamics_verbose'] = 4
 #data.cosmo_arguments['perturbations_verbose'] = 2
 #data.cosmo_arguments['tol_perturb_integration'] = 1.0e-6
 
