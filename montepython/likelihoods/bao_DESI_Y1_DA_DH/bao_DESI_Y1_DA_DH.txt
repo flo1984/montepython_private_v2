@@ -1,0 +1,7 @@
+# The format is : Name of data set, z, DM/rd, sigma, DH/rd, correlation between them ty 
+# The DESI results are taken from Table 1 of 2404.03002
+LRG1    0.510    13.62    0.25    20.98   0.61	  -0.445
+LRG2    0.706    16.85    0.32    20.08   0.60	  -0.420
+LRGELG  0.930    21.71    0.28    17.88   0.35	  -0.389
+ELG     1.317    27.79    0.69    13.82   0.42	  -0.444
+LyalQSO 2.330	 39.71	  0.94	  8.52	  0.17	  -0.477

@@ -1,0 +1,8 @@
+# BOSS BAO-only DR12
+# Alam et al. 2016 (arxiv:1607.03155)
+# By Thejs Brinckmann June 2017
+bao_boss_dr12_lowzonly.data_directory      = data.path['data']
+bao_boss_dr12_lowzonly.data_file           = 'COMBINEDDR12_BAO_consensus_dM_Hz_lowzonly/BAO_consensus_results_dM_Hz_lowzonly.txt'
+bao_boss_dr12_lowzonly.cov_file            = 'COMBINEDDR12_BAO_consensus_dM_Hz_lowzonly/BAO_consensus_covtot_dM_Hz_lowzonly.txt'
+bao_boss_dr12_lowzonly.rs_rescale          = 1.
+bao_boss_dr12_lowzonly.rd_fid_in_Mpc       = 147.78

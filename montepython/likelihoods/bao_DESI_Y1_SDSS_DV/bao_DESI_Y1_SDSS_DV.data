@@ -1,0 +1,4 @@
+# BAO data
+bao_DESI_Y1_SDSS_DV.data_directory      = data.path['data']
+bao_DESI_Y1_SDSS_DV.file                = 'bao_DESI_Y1_SDSS_DV.txt'
+bao_DESI_Y1_SDSS_DV.exclude             = []

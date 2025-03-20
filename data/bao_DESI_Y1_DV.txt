@@ -1,0 +1,4 @@
+# z, quantity, sigma, type (D_V/rs=3, Dv/Mpc=4, DA/rs=5, c/Hrs=6, rs/D_v=7)
+# The DESI results are taken from Table 1 of 2404.03002
+BGS    0.295    7.93    0.15    3
+QSO    1.491    26.07   0.67    3
