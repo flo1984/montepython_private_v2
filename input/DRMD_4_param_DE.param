@@ -39,13 +39,8 @@ data.parameters['h']            = [.715,   None, None,   .006,    1, 'cosmo']
 data.parameters['ln10^{10}A_s'] = [ 3.077,   None, None, 0.0029,    1, 'cosmo']
 data.parameters['n_s']          = [0.99,   None, None, 0.0074,    1, 'cosmo']
 data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
-
-# Dark energy parameters
-
 data.parameters['w0_fld']    = [-1.0, -2.0, 0.0, 0.05, 1, 'cosmo']  
 data.parameters['wa_fld']    = [0.0, -2.0, 2.0, 0.05, 1, 'cosmo']   
-
-#DRMD parameters
 data.parameters['delta_Neff_drmd']    = [0.4,   0.0000001, 3,  0.14,    1, 'cosmo']
 data.parameters['log10z_stop']     = [4.2,   2, 5,  0.06,    1, 'cosmo']
 data.parameters['f_idm_drmd']     = [0.03,   0.0000001, 1,  0.02,    1, 'cosmo']
