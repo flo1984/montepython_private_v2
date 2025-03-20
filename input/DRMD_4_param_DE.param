@@ -130,6 +130,8 @@ data.cosmo_arguments['output'] = 'mPk'
 data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
 
+data.cosmo_arguments['Omega_Lambda'] = 0.
+
 
 
 
