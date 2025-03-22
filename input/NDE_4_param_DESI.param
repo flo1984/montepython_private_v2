@@ -103,8 +103,6 @@ data.parameters['H0']              = [0, None, None, 0,     1,   'derived']
 data.parameters['Omega_m']              = [0, None, None, 0,     1,   'derived']
 data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
 data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
-data.parameters['f_drmd']          = [0, None, None, 0,     1,   'derived']
-data.parameters['z_dec_drmd']          = [0, None, None, 0,     1,   'derived']
 data.parameters['YHe']          = [0, None, None, 0,     1,   'derived']
 
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
