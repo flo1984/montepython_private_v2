@@ -93,16 +93,14 @@ data.parameters['A_sbpx_217_217_EE'] = [       1,     1,     1,          0,     
 data.parameters['A_planck']          = [ 1.00061,   0.9,   1.1,     0.0025,     1, 'nuisance']
 data.parameters['A_pol']             = [       1,     1,     1,          0,     1, 'nuisance']
 
-
-data.parameters['M']          = [-19.1,   None, None,  0.004,  1,'nuisance']
-
 # Derived parameters
 
-data.parameters['H0']              = [0, None, None, 0,     1,   'derived']
-data.parameters['Omega_m']              = [0, None, None, 0,     1,   'derived']
-data.parameters['sigma8']          = [0, None, None, 0,     1,   'derived']
-data.parameters['rs_d']          = [0, None, None, 0,     1,   'derived']
+data.parameters['H0']           = [0, None, None, 0,     1,   'derived']
+data.parameters['Omega_m']      = [0, None, None, 0,     1,   'derived']
+data.parameters['sigma8']       = [0, None, None, 0,     1,   'derived']
+data.parameters['rs_d']         = [0, None, None, 0,     1,   'derived']
 data.parameters['YHe']          = [0, None, None, 0,     1,   'derived']
+
 
 # Other cosmo parameters (fixed parameters, precision parameters, etc.)
 
