@@ -70,7 +70,7 @@ data.cosmo_arguments['T_ncdm'] = 0.71611
 #data.cosmo_arguments['output'] = 'mPk'
 #data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 
-
+data.cosmo_arguments['omega_b'] = 0.028
 
 #------ Mcmc parameters ----
 
