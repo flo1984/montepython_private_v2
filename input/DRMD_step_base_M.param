@@ -44,6 +44,7 @@ data.parameters['tau_reio']     = [0.057,   0.04, None,  0.013,    1, 'cosmo']
 data.parameters['delta_Neff_drmd']    = [0.7,   0.0000001, 3,  0.14,    1, 'cosmo']
 data.parameters['log10z_stop']     = [4.7,   2, 5,  0.06,    1, 'cosmo']
 data.parameters['f_idm_drmd']     = [0.03,   0.0000001, 1,  0.02,    1, 'cosmo']
+data.parameters['log10z_step']     = [4,   3, 4.9,  0.06,    1, 'cosmo']
 
 
 # Nuisance parameter list, same call, except the name does not have to be a class name
@@ -132,6 +133,9 @@ data.cosmo_arguments['P_k_max_h/Mpc'] = 1.
 # These are additional DRMD parameters 
 data.cosmo_arguments['start_large_k_at_tau_h_over_tau_k'] = 0.00002
 data.cosmo_arguments['G_over_aH_drmd_ini'] = 1.e6
+data.cosmo_arguments['rg_drmd'] = 0.16666666
+data.cosmo_arguments['table_dir'] = "/Users/cosmo/Documents/CMB/DRMD-CLASS_private/tables"
+
 
 
 #------ Mcmc parameters ----

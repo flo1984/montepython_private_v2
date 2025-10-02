@@ -869,6 +869,10 @@ class Data(object):
                 self.cosmo_arguments['z_stop'] = 10**self.cosmo_arguments[elem]
                 del self.cosmo_arguments[elem]
                 
+            elif elem == 'log10z_step':
+                self.cosmo_arguments['z_step'] = 10**self.cosmo_arguments[elem]
+                del self.cosmo_arguments[elem]
+                
             elif elem == 'log10G/(aH)':
                 #self.cosmo_arguments['NEDE_z_decay'] = 10**self.cosmo_arguments[elem]
                 self.cosmo_arguments['G_over_aH_drmd_ini'] = 10**self.cosmo_arguments[elem]
